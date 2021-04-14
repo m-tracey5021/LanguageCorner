@@ -1,10 +1,27 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view />
+    <div class="row">
+        <div class="col-md-4"></div>      
+        <div class="col-md-4"></div>      
+        <div class="col-md-4">
+            <Reader text="This is the reader box"/>
+        </div>      
+        
+    </div>
+    
 </template>
+
+<script>
+
+import Reader from './components/Reader'
+
+export default {
+  name: 'App',
+  components: {
+    Reader,
+  },
+}
+
+</script>
 
 <style lang="scss">
 #app {
