@@ -25,24 +25,29 @@ export default {
         selectFile: function(){
             var input = document.createElement('input');
             input.setAttribute('type', 'file');
-            // input.onchange = e => { 
+            input.onchange = e => { 
 
-            //     // getting a hold of the file reference
-            //     var file = e.target.files[0]; 
+                // getting a hold of the file reference
+                var file = e.target.files[0]; 
 
-            //     // setting up the reader
-            //     var reader = new FileReader();
-            //     reader.readAsText(file,'UTF-8');
+                // setting up the reader
+                var reader = new FileReader();
+                reader.readAsText(file,'UTF-8');
 
-            //     // here we tell the reader what to do when it's done reading...
-            //     reader.onload = readerEvent => {
-            //         var content = readerEvent.target.result; // this is the content!
-            //     }
-            // }
+                // here we tell the reader what to do when it's done reading...
+                reader.onload = readerEvent => {
+                    var content = readerEvent.target.result; // this is the content!
+                    // console.log(content);
+                    debugger;
+                    // this.$emit('fileSelected', {fileContent: content});
+                    this.$emit('fileSelected', content);
+                    return content;
+                }
+            }
+
             input.click();
 
-            
-
+        
             return false;
         }
     }

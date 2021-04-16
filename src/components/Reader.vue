@@ -1,5 +1,5 @@
 <template>
-    <FileSelector instruction="Please select a file"/>
+    <FileSelector instruction="Please select a file" @fileSelected="updateTextReader"/>
     <div id="readerrow" class="row">
         <textarea id="reader" class="form-control"></textarea>
     </div>
@@ -15,7 +15,12 @@ export default {
         FileSelector
     },
     props: {
-        test: String,
+        text: String,
+    },
+    methods: {
+        updateTextReader: function(content){
+            document.getElementById('reader').value = content;
+        }
     },
 }
 
