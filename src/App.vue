@@ -4,8 +4,13 @@
         <div class="col-md-4"></div>      
         <div class="col-md-4">
             <Reader text="This is the reader box"/>
-        </div>      
-        
+            <WordHelper text="test">
+              <span>hover over me</span>
+            </WordHelper>  
+        </div>   
+         
+        <i class="fad fa-laugh-wink"></i>
+
     </div>
     
 </template>
@@ -13,11 +18,13 @@
 <script>
 
 import Reader from './components/Reader'
+import WordHelper from './components/WordHelper.vue'
 
 export default {
   name: 'App',
   components: {
     Reader,
+    WordHelper
   },
 }
 

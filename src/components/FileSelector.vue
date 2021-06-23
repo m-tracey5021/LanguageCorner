@@ -38,7 +38,6 @@ export default {
                 reader.onload = readerEvent => {
                     var content = readerEvent.target.result; // this is the content!
                     // console.log(content);
-                    debugger;
                     // this.$emit('fileSelected', {fileContent: content});
                     this.$emit('fileSelected', content);
                     return content;
