@@ -1,26 +1,30 @@
 <template>
     <div class="container">
-        <div id="file-selector" class="row mb-4">
-            <FileSelector instruction="Please select a file" @fileSelected="updateTextReader"/>
-        </div>
-        <div id="tool-buttons" class="row justify-content-center mb-4">
-            <div class="col-md-4">
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-secondary">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" class="btn btn-secondary">
-                        <i class="fas fa-highlighter"></i>
-                    </button>
-                    
-                    <button type="button" class="btn btn-secondary">Right</button>
-                </div>
+        <div id="tools" class="row mt-4 mb-2">
+            <div class="col-md-auto">
+                <FileSelector instruction="Please select a file" @fileSelected="updateTextReader"/>
             </div>
-            
+            <div class="col-md-auto">
+                <div id="tool-buttons" class="row justify-content-center mb-4">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary">
+                            <i class="fas fa-highlighter"></i>
+                        </button>
+                        <button type="button" class="btn btn-secondary">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                    </div> 
+                </div>
+                  
+            </div>
         </div>
-        <div id="reader-row" class="row mb-4">
+        <div class="row">
             <textarea id="reader" class="form-control"></textarea>
         </div>
+        
     </div>
     
 </template>
@@ -28,10 +32,6 @@
 <script>
 
 import FileSelector from './FileSelector';
-
-// window.$(document).ready(function(){
-//   window.$('[data-toggle="tooltip"]').tooltip();
-// });
 
 export default {
     name: 'Reader',
@@ -52,13 +52,9 @@ export default {
 
 <style scoped>
 
-    #readerrow {
-        height: 100%;
-    }
-
-    textarea {
-        width: 100%;
-        height: 180%;
+    #reader {
+        width: 600px;
+        height: 800px;
     }
 
 </style>

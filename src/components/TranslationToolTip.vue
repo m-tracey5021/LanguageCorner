@@ -2,7 +2,7 @@
     <div class="tooltip-box">
         <slot />
         <div class="tooltip">
-            <span class="text">{{ text }}</span>
+            <span class="text">{{ translation }}</span>
         </div>
     </div>
 </template>
@@ -11,9 +11,9 @@
 
 
 export default {
-    name: 'WordHelper',
+    name: 'TranslationToolTip',
     props: {
-        text: {
+        translation: {
             type: String,
             required: true
         }

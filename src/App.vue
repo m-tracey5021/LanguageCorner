@@ -1,15 +1,11 @@
 <template>
     <div class="row">
         <div class="col-md-4"></div>      
-        <div class="col-md-4"></div>      
-        <div class="col-md-4">
+        <div class="col-md-auto">
             <Reader text="This is the reader box"/>
-            <WordHelper text="test">
-              <span>hover over me</span>
-            </WordHelper>  
         </div>   
-         
-        <i class="fad fa-laugh-wink"></i>
+        <div class="col-md-4"></div>   
+      
 
     </div>
     
@@ -18,19 +14,18 @@
 <script>
 
 import Reader from './components/Reader'
-import WordHelper from './components/WordHelper.vue'
 
 export default {
   name: 'App',
   components: {
-    Reader,
-    WordHelper
+    Reader
   },
 }
 
 </script>
 
 <style lang="scss">
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -51,4 +46,5 @@ export default {
     }
   }
 }
+
 </style>

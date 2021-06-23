@@ -1,10 +1,10 @@
 <template>
     <div class="container">
-        <div class="row mt-4 mb-4">
+        <div class="row">
             <div class="col-md-12">
                 <form>
                     <div class="form-group">
-                        <button type="button" id="file-select" class="btn btn-outline-dark" v-on:click="selectFile()">Select file</button>
+                        <button type="button" id="file-select" class="btn btn-secondary" v-on:click="selectFile()">Select file</button>
                         <!-- <label for="file-select" id="file-select-label" class="float-start mb-4">{{instruction}}</label> -->
                         <!-- <input type="file" id="file-select" class="form-control-file p-1 float-start border"> -->
                     </div>
