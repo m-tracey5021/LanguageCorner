@@ -22,39 +22,50 @@
             </div>
         </div>
         <div class="row">
-            <textarea id="reader" class="form-control"></textarea>
+            <Translator language="english" :text="selectedFile"/>
         </div>
-        
+
     </div>
     
 </template>
 
 <script>
 
-import FileSelector from './FileSelector';
+import FileSelector from "./FileSelector";
+import Translator from "./Translator";
 
 export default {
-    name: 'Reader',
+    name: "Reader",
     components: {
-        FileSelector
+        FileSelector,
+        Translator
     },
     props: {
-        text: String,
+        language: {
+            type: String
+        }
     },
     methods: {
         updateTextReader: function(content){
-            document.getElementById('reader').value = content;
+            // document.getElementById("reader").value = content;
+            this.selectedFile = content;
+        },
+        translateHighlighted: function(){
+            var reader = document.getElementById("reader");
+            var highlighted = (reader.value).substring(reader.selectionStart, reader.selectionEnd);
+            console.log(highlighted);
         }
     },
+    data: function(){
+        return {
+            selectedFile: ""
+        }
+    }
 }
 
 </script>
 
 <style scoped>
 
-    #reader {
-        width: 600px;
-        height: 800px;
-    }
 
 </style>

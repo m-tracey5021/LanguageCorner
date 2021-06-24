@@ -10,10 +10,10 @@
 
 <script>
 
-import TranslationToolTip from './TranslationToolTip';
+import TranslationToolTip from "./TranslationToolTip";
 
 export default {
-    name: 'TranslatedText',
+    name: "TranslatedText",
     components: {
         TranslationToolTip
     },

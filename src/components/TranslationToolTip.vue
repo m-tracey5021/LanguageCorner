@@ -11,7 +11,7 @@
 
 
 export default {
-    name: 'TranslationToolTip',
+    name: "TranslationToolTip",
     props: {
         translation: {
             type: String,

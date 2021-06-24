@@ -5,8 +5,6 @@
                 <form>
                     <div class="form-group">
                         <button type="button" id="file-select" class="btn btn-secondary" v-on:click="selectFile()">Select file</button>
-                        <!-- <label for="file-select" id="file-select-label" class="float-start mb-4">{{instruction}}</label> -->
-                        <!-- <input type="file" id="file-select" class="form-control-file p-1 float-start border"> -->
                     </div>
                 </form>
             </div>
@@ -37,10 +35,7 @@ export default {
                 // here we tell the reader what to do when it's done reading...
                 reader.onload = readerEvent => {
                     var content = readerEvent.target.result; // this is the content!
-                    // console.log(content);
-                    // this.$emit('fileSelected', {fileContent: content});
                     this.$emit('fileSelected', content);
-                    return content;
                 }
             }
 

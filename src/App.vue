@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4"></div>      
         <div class="col-md-auto">
-            <Reader text="This is the reader box"/>
+            <Reader language="english"/>
         </div>   
         <div class="col-md-4"></div>   
       
