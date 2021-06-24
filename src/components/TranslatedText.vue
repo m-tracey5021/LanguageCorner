@@ -37,4 +37,8 @@ export default {
 
 <style scoped>
 
+/* .front {
+    z-index: 10;
+} */
+
 </style>

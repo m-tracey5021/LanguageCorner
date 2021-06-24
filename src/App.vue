@@ -3,6 +3,7 @@
         <div class="col-md-4"></div>      
         <div class="col-md-auto">
             <Reader language="english"/>
+            <!-- <TranslatedText original="ola" translated="hello"/> -->
         </div>   
         <div class="col-md-4"></div>   
       
@@ -13,12 +14,14 @@
 
 <script>
 
-import Reader from './components/Reader'
+import Reader from "./components/Reader"
+// import TranslatedText from "./components/TranslatedText"
 
 export default {
   name: 'App',
   components: {
     Reader
+    // TranslatedText
   },
 }
 

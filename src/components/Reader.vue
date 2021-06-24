@@ -18,12 +18,25 @@
                         </button>
                     </div> 
                 </div>
-                  
+                
             </div>
         </div>
         <div class="row">
-            <Translator language="english" :text="selectedFile"/>
+            <div class="col-md-4">
+                <TranslationBox original="ola" translation="hello"/>
+            </div>
+            <div class="col-md-8">
+                
+                <div class="row">
+                    <Translator language="english" :text="selectedFile"/>
+                </div>
+            </div>
+
+
         </div>
+
+
+        
 
     </div>
     
@@ -31,12 +44,14 @@
 
 <script>
 
+import TranslationBox from "./TranslationBox";
 import FileSelector from "./FileSelector";
 import Translator from "./Translator";
 
 export default {
     name: "Reader",
     components: {
+        TranslationBox,
         FileSelector,
         Translator
     },

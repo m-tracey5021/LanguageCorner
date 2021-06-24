@@ -1,24 +1,29 @@
 <template>
     <div class="container">
         <div class="row">
-            <div id="reader" class="hvr-overline-from-center pt-4">
+            <div id="reader" class="hvr-overline-from-center pt-4 border rounded">
                 <span v-for="word in words" :key="word">
-                    {{ word + " " }}
+                    <span v-if="word == 'highlighted'">
+                        <TranslatedText :original="word" translated="translation"/>
+                    </span>
+                    <span v-else>
+                        {{ word + " " }}
+                    </span>
                 </span>
             </div>
         </div>
-        
-
     </div>
     
 </template>
 
 <script>
 
+import TranslatedText from "./TranslatedText";
+
 export default {
     name: "Translator",
     components: {
-
+        TranslatedText
     },
     props: {
         language: {
@@ -35,7 +40,8 @@ export default {
     },
     data: function(){
         return {
-            words: this.text.split(" ")
+            words: this.text.split(" "),
+            translatedWords: new Map()
         }
     },
     watch: {
@@ -52,8 +58,8 @@ export default {
 #reader {
     width: 600px;
     height: 800px;
-    border: 1px solid;
-    border-radius: 4px;
+    /* border: 1px solid;
+    border-radius: 4px; */
 }
 
 .hvr-overline-from-center {
