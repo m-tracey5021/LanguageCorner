@@ -1,42 +1,24 @@
 <template>
-
-    <p>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Simple Translation
-        </button>
-    </p>
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-        </div>
-    </div>
-
     <div class="card shadow hvr-overline-from-center" style="width: 18rem;">
-        <div class="py-2">
-            Simple Translation
+        <div class="card-header font-weight-bold">
+            Annotation
         </div>
-        <ul class="list-group list-group-flush border rounded mb-2">
-            <li class="list-group-item">{{ originalData }}</li>
-            <li class="list-group-item">
-                <div class="row justify-content-center">
-                    <i class="fas fa-arrows-alt-v fa-5x"></i>
-                </div>
-            </li>
-            <li class="list-group-item">{{ translationData }}</li>
-        </ul>
+        <div class="justify-content-center border rounded mb-2">
+            <span>{{ annotationData }}</span>
+        </div>
     </div>
 </template>
 
 <script>
 
 export default {
-    name: "TranslationBox",
+    name: "AnnotationBox",
     props: {
         original: {
             type: String,
             required: true
         },
-        translation: {
+        annotation: {
             type: String,
             required: true
         }
@@ -49,14 +31,14 @@ export default {
             // jiggle the box and update the value
             this.originalData = newValue;
         },
-        translation: function(newValue){
-            this.translationData = newValue;
+        annotation: function(newValue){
+            this.annotationData = newValue;
         }
     },
     data: function(){
         return {
             originalData: this.original,
-            translationData: this.translation
+            annotationData: this.annotation
         }
     }
 }

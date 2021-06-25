@@ -1,21 +1,21 @@
 <template>
     
-    <TranslationToolTip :translation="tooltipValue">
+    <ToolTip :text="tooltipValue">
         <div class="mark">
             <span>{{ text }}</span>
         </div>
-    </TranslationToolTip>  
+    </ToolTip>  
 
 </template>
 
 <script>
 
-import TranslationToolTip from "./TranslationToolTip";
+import ToolTip from "./ToolTip";
 
 export default {
     name: "TranslatedText",
     components: {
-        TranslationToolTip
+        ToolTip
     },
     props: {
         original: {

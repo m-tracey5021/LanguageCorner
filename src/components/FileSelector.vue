@@ -1,5 +1,14 @@
 <template>
-    <div class="container">
+
+    <!-- <el-row>
+        <el-col :span="24">
+            <el-button type="info" plain v-on:click="selectFile()">Select File</el-button>
+        </el-col>
+    </el-row> -->
+
+    <Button label="Select File" class="p-button-outlined" v-on:click="selectFile()"/>
+
+    <!-- <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <form>
@@ -9,7 +18,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <script>

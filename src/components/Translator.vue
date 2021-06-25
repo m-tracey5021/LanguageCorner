@@ -1,10 +1,32 @@
 <template>
-    <div class="container">
+
+
+    <Panel header="Reader" class="p-shadow-5">
+        <template #icons>
+            <button class="p-panel-header-icon p-link p-mr-2" v-on:click="settings()">
+                <span class="pi pi-cog"></span>
+            </button>
+        </template>
+        <span v-for="word in originalWordData" :key="word">
+            <span v-if="word == 'highlighted'">
+
+                <Translatable :word="word" :language="language"/>
+            </span>
+            <span v-else>
+                {{ word + " " }}
+            </span>
+        </span>
+    </Panel>
+
+
+
+    <!-- <div class="container">
         <div class="row">
-            <div id="reader" class="hvr-overline-from-center pt-4 border rounded">
-                <span v-for="word in words" :key="word">
+            <div id="reader" class="hvr-overline-from-center pt-4 border rounded shadow-sm p-3 mb-5 bg-white">
+                <span v-for="word in originalWordData" :key="word">
                     <span v-if="word == 'highlighted'">
-                        <TranslatedText :original="word" translated="translation"/>
+    
+                        <Translatable :word="word" :language="language"/>
                     </span>
                     <span v-else>
                         {{ word + " " }}
@@ -12,18 +34,20 @@
                 </span>
             </div>
         </div>
-    </div>
+    </div> -->
     
 </template>
 
 <script>
 
-import TranslatedText from "./TranslatedText";
+import Translatable from "./Translatable";
+// import TranslatedText from "./TranslatedText";
 
 export default {
     name: "Translator",
     components: {
-        TranslatedText
+        Translatable
+        // TranslatedText
     },
     props: {
         language: {
@@ -36,17 +60,71 @@ export default {
         }
     },
     methods: {
+        isAlpha: function(str){
+            return str.length === 1 && str.match(/[a-z]/i);
+        },
+        trim: function(word){
+            for (var i = 0; i < word.length; i ++){
+                if (!this.isAlpha(word.charAt(i))){
+                    word = word.substring(0, i) + word.substring(i + 1);
+                }
+            }
+            return word.toLowerCase();
+        },
+        settings: function(){
 
+        }
     },
     data: function(){
         return {
-            words: this.text.split(" "),
-            translatedWords: new Map()
+            checked: true,
+            originalWordData: this.text.split(" "),
+            translatedWordData: []
         }
     },
     watch: {
         text: function(newValue){
-            this.words = newValue.split(" ");
+
+            console.log("Translating...");
+            
+            var base64 = require('base-64');
+
+            var apiEndpoint = 'https://dictapi.lexicala.com/search-entries?source=global&language=' + this.language + '&text=';
+            var username = 'm.tracey5021@gmail.com';
+            var password = 'y_W0rd53cUr!t';
+
+            var headers = new Headers();
+
+            headers.append('Authorization', 'Basic ' + base64.encode(username + ":" + password));
+
+            this.originalWordData = newValue.split(" ");
+
+            for (var i = 0; i < this.originalWordData.length; i ++){
+                var toTranslate = this.trim(this.originalWordData[i]);
+                // var translated = "";
+                var url = apiEndpoint + toTranslate;
+                debugger;
+                fetch(url, {method:'GET',
+                    headers: headers,
+                })
+                .then(function (response){ // converts response to obj, passed to next .then
+                    return response.json();
+                })
+                .then(function (obj){
+                    console.log(obj);
+                    console.log(obj.results);
+                })
+                .catch(function (error){
+                    console.log('Unexpected error: ' + error);
+                });
+                // .then(response => response.json())
+                // .then(json => {
+                    
+                //     var translations = json.results[0].senses[0].translations;
+                //     console.log(json);
+                //     console.log(translations);
+                // });
+            }
         }
     }
 }
