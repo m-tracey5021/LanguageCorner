@@ -1,20 +1,27 @@
 <template>
-    <div class="row">
+
+
+    <div class="p-grid">
+        <div class="p-col-8 p-offset-2 p-mt-5">
+            <Reader language="english"/>
+        </div>
+    </div>  
+    <!-- <div class="row">
         <div class="col-md-4"></div>      
         <div class="col-md-auto">
             <Reader language="english"/>
-            <!-- <TranslatedText original="ola" translated="hello"/> -->
+            
         </div>   
         <div class="col-md-4"></div>   
       
 
-    </div>
+    </div> -->
     
 </template>
 
 <script>
 
-import Reader from "./components/Reader"
+import Reader from "./components/Reader";
 // import TranslatedText from "./components/TranslatedText"
 
 export default {
@@ -29,9 +36,6 @@ export default {
 
 <style lang="scss">
 
-.bg-grey {
-    background-color: #a5a5a5;
-}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

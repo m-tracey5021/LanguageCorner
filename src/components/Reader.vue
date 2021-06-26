@@ -28,14 +28,14 @@
         </div>
         
     </div>
-    <div class="p-grid p-ai-stretched vertical-container">
+    <div class="p-grid">
         <div class="p-col-4">
-            <TranslationBox original="ola" translation="hello"/>
-            <DetailsBox original="ola" pos="greeting" gender="none" case="none"/>
-            <AnnotationBox original="ola" annotation="A common greeting"/>
+            <TranslationDetails :translationDetails="translationDetails"/>
+            <!-- <DetailsBox original="ola" pos="greeting" gender="none" case="none"/>
+            <AnnotationBox original="ola" annotation="A common greeting"/> -->
         </div>
         <div class="p-col-8">
-            <Translator language="en" :text="selectedFile" class="box box-stretched"/>
+            <Translator language="en" :text="selectedFile" title="Name of File" @translationsUpdated="updateTranslationDetails"/>
         </div>
     </div>
 
@@ -103,10 +103,7 @@
 
 
 import FileSelector from "./FileSelector";
-// import ToolTip from "./ToolTip";
-import TranslationBox from "./TranslationBox";
-import DetailsBox from "./DetailsBox";
-import AnnotationBox from "./AnnotationBox";
+import TranslationDetails from "./TranslationDetails";
 import Translator from "./Translator";
 
 export default {
@@ -114,10 +111,7 @@ export default {
     components: {
         
         FileSelector,
-        // ToolTip,
-        TranslationBox,
-        DetailsBox,
-        AnnotationBox,
+        TranslationDetails,
         Translator
     },
     props: {
@@ -131,6 +125,9 @@ export default {
 
             this.selectedFile = content;
         },
+        updateTranslationDetails: function(translationDetails){
+            this.translationDetails = translationDetails;
+        },
         translateHighlighted: function(){
             var reader = document.getElementById("reader");
             var highlighted = (reader.value).substring(reader.selectionStart, reader.selectionEnd);
@@ -139,7 +136,8 @@ export default {
     },
     data: function(){
         return {
-            selectedFile: ""
+            selectedFile: "",
+            translationDetails: {}
         }
     }
 }

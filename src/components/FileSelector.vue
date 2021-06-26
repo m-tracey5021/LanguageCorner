@@ -6,7 +6,7 @@
         </el-col>
     </el-row> -->
 
-    <Button label="Select File" class="p-button-outlined" v-on:click="selectFile()"/>
+    <Button id="file-select" label="Select File" class="p-button-outlined" v-on:click="selectFile()"/>
 
     <!-- <div class="container">
         <div class="row">
@@ -30,6 +30,8 @@ export default {
     },
     methods: {
         selectFile: function(){
+
+
             var input = document.createElement('input');
             input.setAttribute('type', 'file');
             input.onchange = e => { 

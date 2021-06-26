@@ -1,21 +1,28 @@
 <template>
 
 
-    <Panel header="Reader" class="p-shadow-5">
+    <Panel :header="titleData" class="p-shadow-5" style="height:800px">
         <template #icons>
             <button class="p-panel-header-icon p-link p-mr-2" v-on:click="settings()">
                 <span class="pi pi-cog"></span>
             </button>
         </template>
-        <span v-for="word in originalWordData" :key="word">
-            <span v-if="word == 'highlighted'">
+        <span v-for="word in originalData" :key="word">
+            <span v-if="isTranslated(word)">
 
-                <Translatable :word="word" :language="language"/>
+                <TranslatedText :original="word" :translated="getTranslated(word)" :showTooltip="false"/>
             </span>
             <span v-else>
-                {{ word + " " }}
+                <Translatable :language="languageData" :original="word" @translated="translationsUpdated"/>
+                <!-- {{ word + " " }} -->
             </span>
         </span>
+        <span>wee</span>
+        <span>woo</span>
+        <span>wee</span>
+        <span>woo</span>
+        <span>wee</span>
+        <span>woo</span>
     </Panel>
 
 
@@ -41,13 +48,13 @@
 <script>
 
 import Translatable from "./Translatable";
-// import TranslatedText from "./TranslatedText";
+import TranslatedText from "./TranslatedText";
 
 export default {
     name: "Translator",
     components: {
-        Translatable
-        // TranslatedText
+        Translatable,
+        TranslatedText
     },
     props: {
         language: {
@@ -55,6 +62,10 @@ export default {
             required: true
         },
         text: {
+            type: String,
+            required: true
+        },
+        title: {
             type: String,
             required: true
         }
@@ -73,58 +84,41 @@ export default {
         },
         settings: function(){
 
+        },
+        isTranslated: function(word){
+            for (var i = 0; i < this.translationData.length; i ++){
+                if (this.translationData[i].original == word){
+                    return true;
+                }
+            }
+            return false;
+        },
+        getTranslated: function(word){
+            for (var i = 0; i < this.translationData.length; i ++){
+                if (this.translationData[i].original == word){
+                    return this.translationData[i].translation;
+                }
+            }
+            return "";
+        },
+        translationsUpdated: function(translationDetails){
+            this.translationData.push(translationDetails);
+            this.$emit("translationsUpdated", translationDetails);
         }
     },
     data: function(){
         return {
-            checked: true,
-            originalWordData: this.text.split(" "),
-            translatedWordData: []
+            languageData: this.language,
+            originalData: this.text.split(" "),
+            translationData: [],
+            titleData: this.title
         }
     },
     watch: {
         text: function(newValue){
-
-            console.log("Translating...");
-            
-            var base64 = require('base-64');
-
-            var apiEndpoint = 'https://dictapi.lexicala.com/search-entries?source=global&language=' + this.language + '&text=';
-            var username = 'm.tracey5021@gmail.com';
-            var password = 'y_W0rd53cUr!t';
-
-            var headers = new Headers();
-
-            headers.append('Authorization', 'Basic ' + base64.encode(username + ":" + password));
-
             this.originalWordData = newValue.split(" ");
-
-            for (var i = 0; i < this.originalWordData.length; i ++){
-                var toTranslate = this.trim(this.originalWordData[i]);
-                // var translated = "";
-                var url = apiEndpoint + toTranslate;
-                debugger;
-                fetch(url, {method:'GET',
-                    headers: headers,
-                })
-                .then(function (response){ // converts response to obj, passed to next .then
-                    return response.json();
-                })
-                .then(function (obj){
-                    console.log(obj);
-                    console.log(obj.results);
-                })
-                .catch(function (error){
-                    console.log('Unexpected error: ' + error);
-                });
-                // .then(response => response.json())
-                // .then(json => {
-                    
-                //     var translations = json.results[0].senses[0].translations;
-                //     console.log(json);
-                //     console.log(translations);
-                // });
-            }
+            this.translationData = [];
+            
         }
     }
 }
@@ -133,43 +127,5 @@ export default {
 
 <style scoped>
 
-#reader {
-    width: 600px;
-    height: 800px;
-    /* border: 1px solid;
-    border-radius: 4px; */
-}
-
-.hvr-overline-from-center {
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  position: relative;
-  overflow: hidden;
-}
-
-.hvr-overline-from-center:before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 51%;
-  right: 51%;
-  top: 0;
-  background: #ffea71;
-  height: 4px;
-  -webkit-transition-property: left, right;
-  transition-property: left, right;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-.hvr-overline-from-center:hover:before, .hvr-overline-from-center:focus:before, .hvr-overline-from-center:active:before {
-  left: 0;
-  right: 0;
-}
 
 </style>
