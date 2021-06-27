@@ -21,15 +21,20 @@
 
 <script>
 
+// import * as translationServiceImport from "./services/translationService.js";
+
 import Reader from "./components/Reader";
-// import TranslatedText from "./components/TranslatedText"
 
 export default {
-  name: 'App',
-  components: {
-    Reader
-    // TranslatedText
-  },
+    name: 'App',
+    components: {
+        Reader,
+    },
+    // provide(){
+    //     return {
+    //         translationService: "injected"
+    //     }
+    // }
 }
 
 </script>

@@ -6,12 +6,12 @@
             <Switch :left="originalData" :right="translationData"/>
         </div>
     </Fieldset>
-    <Fieldset legend="Translation Details" :toggleable="true" :collapsed="true" class="p-my-5 p-shadow-4">
+    <Fieldset id="translation-details" legend="Translation Details" :toggleable="true" :collapsed="true" class="p-my-5 p-shadow-4">
         <div v-for="detail in detailsData" :key="detail">
             <Switch :left="detail.Detail" :right="detail.Value"/>
         </div>
     </Fieldset>
-    <Fieldset legend="Annotation" :toggleable="true" :collapsed="true" class="p-my-5 p-shadow-4">
+    <Fieldset id="annotation" legend="Annotation" :toggleable="true" :collapsed="true" class="p-my-5 p-shadow-4">
         <div>
             Your annotation here
         </div>
@@ -35,15 +35,23 @@ export default {
         }
     },
     methods: {
-
+        buzzBoxes: function(elementId){
+            const element = document.getElementById(elementId);
+            element.classList.add('buzz');
+            element.addEventListener('animationend', () => {
+                element.classList.remove('buzz');
+            });
+        }
     },
     watch: {
         translationDetails: function(newValue){
             this.translationDetailsData = newValue;
             this.originalData = newValue.original;
             this.translationData = newValue.translation;
-            const element = document.getElementById('simple-translation');
-            element.classList.add('buzz');
+            this.buzzBoxes('simple-translation');
+            this.buzzBoxes('translation-details');
+            this.buzzBoxes('annotation');
+
         } 
     },
     data: function(){

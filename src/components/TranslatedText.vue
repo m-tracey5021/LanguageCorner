@@ -1,10 +1,10 @@
 <template>
-    <div class="pop-text">
+    <div class="p-mx-1 grow pointer">
         <div v-if="showTooltipData">
-            <span class="mark" v-tooltip="translation">{{ originalData }}</span>
+            <span class="mark" v-tooltip="translation">{{ translationDetailsData.original }}</span>
         </div>
         <div v-else>
-            <span class="mark" v-on:click="updateTranslationBoxes()">{{ originalData }}</span>
+            <span class="mark" v-on:click="translationSelected()">{{ translationDetailsData.original }}</span>
         </div>
     </div>
     
@@ -27,11 +27,9 @@ export default {
         // ToolTip
     },
     props: {
-        original: {
-            type: String
-        },
-        translated: {
-            type: String
+        translationDetails: {
+            type: Object,
+            required: true
         },
         showTooltip: {
             type: Boolean,
@@ -39,14 +37,13 @@ export default {
         }
     },
     methods: {
-        updateTranslationBoxes: function(){
-
+        translationSelected: function(){
+            this.$emit('translationSelected', this.translationDetailsData, false);
         }
     },
     data: function(){
         return {
-            originalData: this.original,
-            translationData: this.translated,
+            translationDetailsData: this.translationDetails,
             showTooltipData: this.showTooltip
         }
     }
@@ -56,8 +53,8 @@ export default {
 
 <style scoped>
 
-.pop-text:hover {
-    box-shadow: 5px 10px 18px #888888
+.pointer {
+    cursor: pointer;
 }
 
 </style>

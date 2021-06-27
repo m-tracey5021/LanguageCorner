@@ -1,24 +1,7 @@
 <template>
 
-    <!-- <el-row>
-        <el-col :span="24">
-            <el-button type="info" plain v-on:click="selectFile()">Select File</el-button>
-        </el-col>
-    </el-row> -->
-
     <Button id="file-select" label="Select File" class="p-button-outlined" v-on:click="selectFile()"/>
 
-    <!-- <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <form>
-                    <div class="form-group">
-                        <button type="button" id="file-select" class="btn btn-secondary" v-on:click="selectFile()">Select file</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
 </template>
 
 <script>
@@ -37,7 +20,7 @@ export default {
             input.onchange = e => { 
 
                 // getting a hold of the file reference
-                var file = e.target.files[0]; 
+                var file = e.target.files[0];
 
                 // setting up the reader
                 var reader = new FileReader();
@@ -46,7 +29,10 @@ export default {
                 // here we tell the reader what to do when it's done reading...
                 reader.onload = readerEvent => {
                     var content = readerEvent.target.result; // this is the content!
-                    this.$emit('fileSelected', content);
+
+                    var filename = input.value.substring(input.value.lastIndexOf("\\") + 1);
+
+                    this.$emit('fileSelected', content, filename);
                 }
             }
 
