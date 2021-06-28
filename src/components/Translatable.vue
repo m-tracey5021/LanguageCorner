@@ -1,7 +1,10 @@
 <template>
     <div class="p-mx-1" v-on:click="translate()">
-        <span id="translatable">{{ originalData }}</span>
+        <span class="translatable">{{ originalData }}</span>
     </div>
+    <Dialog header="Input Error" v-model:visible="displayErrorModal" position="top" :modal="true" >
+        Please select both a source and target language.
+    </Dialog>
 </template>
 
 <script>
@@ -11,18 +14,16 @@ import * as translationService from "../services/translationService.js";
 export default {
     name: "Translatable",
     props: {
-        language: {
-            type: String,
-            required: true
+        source: {
+            type: Object
+        },
+        target: {
+            type: Object
         },
         original: {
             type: String,
             required: true
-        },
-        size: {
-            type: String
-        }
-        
+        }  
     },
     methods: {
         /*
@@ -36,44 +37,34 @@ export default {
             
         */
         translate: function(){
-            
-            // var translation = this.translationService.translate(this.originalData);
-            var translation = translationService.translate(this.originalData);
-            
+            if (this.sourceData != null && this.targetData != null){
 
-            var translationDetails = {
-                "original": this.originalData,
-                "translation": translation
-            };
-
-            this.$emit('translated', translationDetails, true);
-
+                var translation = translationService.translate(this.sourceData, this.targetData, this.originalData);
             
-            
+                var translationDetails = {
+                    "original": this.originalData,
+                    "translation": translation
+                };
+
+                this.$emit('translated', translationDetails, true);
+
+            }else{
+                // modal to say that languages not chosen
+                this.displayErrorModal = true;
+                return;
+            }  
         }
     },
     data: function(){
         return {
-            languageData: this.language,
+            sourceData: this.source,
+            targetData: this.target,
             originalData: this.original,
-            translationData: "",
-            translationService: null
+            displayErrorModal: false
         }
     },
     watch: {
-        size: function(newValue){
-            var element = document.getElementById("translatable");
-            if (newValue == "small"){
-                element.style.fontSize = "12px";
-                // element.style.height = "50%";
-            }else if (newValue == "large"){
-                element.style.fontSize = "20px";
-                // element.style.height = "150%";
-            }else{
-                element.style.fontSize = "16px";
-                // element.style.height = "100%";
-            }
-        }
+        
     }
     // inject: ["translationService"]
 
@@ -83,19 +74,6 @@ export default {
 
 <style scoped>
 
-.size-large {
-    width: 150%;
-    height: 150%;
-}
 
-.size-medium {
-    width: 100%;
-    height: 100%;
-}
-
-.size-small {
-    width: 50%;
-    height: 50%;
-}
 
 </style>

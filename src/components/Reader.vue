@@ -5,10 +5,12 @@
         <div class="p-col-8 p-offset-4">
             <div class="p-d-flex p-jc-between">
                 <FileSelector instruction="Please select a file" @fileSelected="updateTextReader"/>
+                <Dropdown v-model="sourceLanguage" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Source"/>
+                <Dropdown v-model="targetLanguage" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Target"/>
                 <span class="p-buttonset">
-                    <Button label="Edit" icon="pi pi-pencil"/>
-                    <Button label="Translate" icon="pi pi-sort-alt"/>
-                    <Button label="Clear" icon="pi pi-undo"/>   
+                    <Button label="Edit" icon="far fa-edit" v-on:click="editFile()"/>
+                    <Button label="Translate" icon="fas fa-exchange-alt"/>
+                    <Button label="Clear" icon="fas fa-undo" v-on:click="clearFile()"/>   
                 </span>
             </div>
             
@@ -20,9 +22,22 @@
             <TranslationDetails :translationDetails="translationDetails"/>
         </div>
         <div class="p-col-8">
-            <Translator language="en" :text="selectedFile" :title="filename" @translationsUpdated="updateTranslationDetails"/>
+            <Translator :source="sourceLanguage" :target="targetLanguage" :text="selectedFile" :title="filename" @translationsUpdated="updateTranslationDetails"/>
         </div>
     </div>
+    <Dialog v-model:visible="displayEditModal" :modal="true">
+        <template #header>
+            <div class="p-d-flex p-jc-start p-mt-3">
+                <h3>Edit File</h3>
+            </div>
+            
+        </template>
+        <Textarea v-model="editedFile" rows="10" cols="30" />
+        <template #footer>
+            <Button label="Save" icon="far fa-save" class="p-button-outlined" v-on:click="saveEdit()"/>
+            <Button label="Cancel" icon="far fa-window-close" class="p-button-outlined" v-on:click="cancelEdit()"/>
+        </template>
+    </Dialog>
     
 </template>
 
@@ -46,6 +61,40 @@ export default {
             type: String
         }
     },
+    data: function(){
+        return {
+            filename: "No file selected",
+            selectedFile: "",
+            editedFile: "",
+            sourceLanguage: null,
+            targetLanguage: null,
+            languages: [
+                { name: 'Arabic', code: 'ar' },
+                { name: 'Chinese', code: 'zh' },
+                { name: 'Danish', code: 'dk' },
+                { name: 'Dutch', code: 'nl' },
+                { name: 'English', code: 'en' },
+                { name: 'French', code: 'fr' },
+                { name: 'German', code: 'de' },
+                { name: 'Greek', code: 'el' },
+                { name: 'Hebrew', code: 'he' },
+                { name: 'Italian', code: 'it' },
+                { name: 'Japanese', code: 'ja' },
+                { name: 'Korean', code: 'ko' },
+                { name: 'Latin', code: 'la' },
+                { name: 'Norwegian', code: 'no' },
+                { name: 'Polish', code: 'pl' },
+                { name: 'Portugese', code: 'pt' },
+                { name: 'Brazilian Portugese', code: 'br' },
+                { name: 'Russian', code: 'ru' },
+                { name: 'Spanish', code: 'es' },
+                { name: 'Swedish', code: 'sv' },
+                { name: 'Turkish', code: 'tr' },
+            ],
+            translationDetails: {},
+            displayEditModal: false
+        }
+    },
     methods: {
         updateTextReader: function(content, filename){
             // document.getElementById("reader").value = content;
@@ -55,19 +104,19 @@ export default {
         updateTranslationDetails: function(translationDetails){
             this.translationDetails = translationDetails;
         },
-        translateHighlighted: function(){
-            var reader = document.getElementById("reader");
-            var highlighted = (reader.value).substring(reader.selectionStart, reader.selectionEnd);
-            console.log(highlighted);
-        }
-    },
-    data: function(){
-        return {
-            filename: "No file selected",
-            selectedFile: "",
-            translationDetails: {}
+        editFile: function(){
+            this.editedFile = this.selectedFile;
+            this.displayEditModal = true;
+        },
+        saveEdit: function(){
+            this.selectedFile = this.editedFile;
+            this.displayEditModal = false;
+        },
+        cancelEdit: function(){
+            this.displayEditModal = false;
         }
     }
+    
 }
 
 </script>

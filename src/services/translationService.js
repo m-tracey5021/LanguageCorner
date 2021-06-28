@@ -1,10 +1,10 @@
-export function translate(original){
+export function translate(sourceLanguage, targetLanguage, original){
     debugger;
     console.log("Translating...");
             
     var base64 = require('base-64');
 
-    var apiEndpoint = 'https://dictapi.lexicala.com/search-entries?source=global&language=' + this.language + '&text=';
+    var apiEndpoint = 'https://dictapi.lexicala.com/search-entries?source=global&language=' + sourceLanguage + '&text=';
     var username = 'm.tracey5021@gmail.com';
     var password = 'y_W0rd53cUr!t';
 

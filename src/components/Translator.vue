@@ -4,20 +4,30 @@
     <Panel :header="title" class="p-shadow-5" style="height:800px">
         <template #icons>
             <button class="p-panel-header-icon p-link p-mr-2" @click="toggle">
-                <span class="pi pi-cog"></span>
+                <span class="fas fa-ellipsis-v"></span>
             </button>
             <TieredMenu id="config-menu" ref="menu" :model="menuItems" :popup="true" />
         </template>
-        <div id="text-panel" class="p-d-flex p-flex-wrap p-jc-center">
-            <span v-for="word in originalData" :key="word">
-                <span v-if="isTranslated(word)">
-                    <TranslatedText :translationDetails="getTranslated(word)" :showTooltip="false" @translationSelected="updateTranslationData"/>
+        <div class="p-panel-content p-shadow-1 scrollable">
+            <div v-if="loaded" id="text-panel" class="p-d-flex p-flex-wrap p-jc-center">
+                <span v-for="word in originalData" :key="word">
+                    <span v-if="isTranslated(word)">
+                        <TranslatedText :translationDetails="getTranslated(word)" :showTooltip="false" @translationSelected="updateTranslationData"/>
+                    </span>
+                    <span v-else>
+                        <Translatable :source="sourceData" :target="targetData" :original="word" @translated="updateTranslationData"/>
+                    </span>
                 </span>
-                <span v-else>
-                    <Translatable :language="languageData" :original="word" :size="fontSize" @translated="updateTranslationData"/>
-                </span>
-            </span>
+            </div>
+            <div v-else>
+                <i class="fas fa-spinner fa-spin"/>
+            </div>
+            
+            
         </div>
+        <!-- <div id="footer">
+            <span class="p-panel-header" style="width:100%">Translation Count: {{ translationCount }}</span>
+        </div> -->
     </Panel>
     
 </template>
@@ -34,16 +44,18 @@ export default {
         TranslatedText
     },
     props: {
-        language: {
-            type: String,
-            required: true
+        source: {
+            type: Object
+        },
+        target: {
+            type: Object
         },
         text: {
             type: String,
             required: true
         },
         title: {
-            type: String,
+            type: String
         },
     },
     methods: {
@@ -60,6 +72,12 @@ export default {
         // },
         toggle: function(event){
             this.$refs.menu.toggle(event);
+        },
+        setFontSize: function(size){
+            var elements = document.getElementsByClassName("translatable");
+            for (var i = 0; i < elements.length; i ++){
+                elements[i].style.fontSize = size;
+            }
         },
         isTranslated: function(word){
             for (var i = 0; i < this.translationData.length; i ++){
@@ -80,24 +98,27 @@ export default {
         updateTranslationData: function(translationDetails, newTranslation){
             if (newTranslation == true){
                 this.translationData.push(translationDetails);
+                this.translationCount ++;
             }
             this.$emit("translationsUpdated", translationDetails);
         }
     },
     data: function(){
         return {
-            languageData: this.language,
+            sourceData: this.source,
+            targetData: this.target,
             originalData: this.text.split(" "),
             translationData: [],
+            translationCount: 0,
             titleData: this.title,
             menuItems: [
                 {
                     label: "Font Size",
                     items: 
                     [
-                        { label: "Large", icon: "fas fa-font fa-lg", command: () => { this.fontSize = "large"; }},
-                        { label: "Medium",  icon: "fas fa-font", command: () => { this.fontSize = "medium" }},
-                        { label: "Small",  icon: "fas fa-font fa-xs", command: () => { this.fontSize = "small" }},
+                        { label: "Large", icon: "fas fa-font fa-lg", command: () => { this.setFontSize("20px"); }},
+                        { label: "Medium",  icon: "fas fa-font", command: () => { this.setFontSize("16px"); }},
+                        { label: "Small",  icon: "fas fa-font fa-xs", command: () => { this.setFontSize("12px"); }},
 
                     ]
                 },
@@ -127,13 +148,15 @@ export default {
                     ]
                 }
             ],
-            fontSize: "medium",
+            loaded: false
         }
     },
     watch: {
         text: function(newValue){
+            this.loaded = false;
             this.originalData = newValue.split(" ");
             this.translationData = [];
+            this.loaded = true;
             
         },
         title: function(newValue){
@@ -146,5 +169,9 @@ export default {
 
 <style scoped>
 
+.scrollable {
+    height: 620px;
+    overflow-y: auto;
+}
 
 </style>
