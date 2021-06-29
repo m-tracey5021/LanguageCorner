@@ -29,9 +29,15 @@ import "../buzz.css";
 import "../underline.css"
 import "../grow.css";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+// import "popper.js";
+
 import "bootstrap";
+// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// import "../bootstrap.min.css";
+// import "../bootstrap.bundle.min.js";
+// import "../bootstrap.min.js";
 
 // import * as translationService from "./services/translationService.js";
 // translationService.translate("big"); // this works

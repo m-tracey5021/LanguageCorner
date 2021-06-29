@@ -1,7 +1,28 @@
 <template>
 
-
-    <div class="p-grid pt-2">
+    <TranslatorToolbar @fileSelected="updateText" @fileEdited="updateText" @highlightFile="highlightFile" @clearFile="clearFile"/>
+    <div class="p-grid">
+        <div class="p-col-4">
+            <TranslationDetails :translationDetails="translationDetails"/>
+        </div>
+        <div class="p-col-8">
+            <Translator :source="sourceLanguage" :target="targetLanguage" :text="selectedFile" :title="filename" @translationsUpdated="updateTranslationDetails"/>
+        </div>
+    </div>
+    <Dialog v-model:visible="displayEditModal" :modal="true">
+        <template #header>
+            <div class="p-d-flex p-jc-start p-mt-3">
+                <h3>Edit File</h3>
+            </div>
+            
+        </template>
+        <Textarea v-model="editedFile" rows="10" cols="30" />
+        <template #footer>
+            <Button label="Save" icon="far fa-save" class="p-button-outlined" v-on:click="saveEdit()"/>
+            <Button label="Cancel" icon="far fa-window-close" class="p-button-outlined" v-on:click="cancelEdit()"/>
+        </template>
+    </Dialog>
+    <!-- <div class="p-grid pt-2">
         <div class="p-col-8 p-offset-4">
             <div class="p-d-flex p-jc-between">
                 <FileSelector instruction="Please select a file" @fileSelected="updateTextReader"/>
@@ -37,23 +58,27 @@
             <Button label="Save" icon="far fa-save" class="p-button-outlined" v-on:click="saveEdit()"/>
             <Button label="Cancel" icon="far fa-window-close" class="p-button-outlined" v-on:click="cancelEdit()"/>
         </template>
-    </Dialog>
+    </Dialog> -->
     
 </template>
 
 <script>
 
 
-import FileSelector from "./FileSelector";
+// import FileSelector from "./FileSelector";
+// import LanguageSelect from "./LanguageSelect";
 import TranslationDetails from "./TranslationDetails";
+import TranslatorToolbar from "./TranslatorToobar";
 import Translator from "./Translator";
 
 export default {
     name: "Reader",
     components: {
         
-        FileSelector,
+        // FileSelector,
+        // LanguageSelect,
         TranslationDetails,
+        TranslatorToolbar,
         Translator
     },
     props: {
@@ -68,6 +93,8 @@ export default {
             editedFile: "",
             sourceLanguage: null,
             targetLanguage: null,
+            sourceDisplay: "Select Source",
+            targetDisplay: "Select Target",
             languages: [
                 { name: 'Arabic', code: 'ar' },
                 { name: 'Chinese', code: 'zh' },
@@ -96,10 +123,17 @@ export default {
         }
     },
     methods: {
-        updateTextReader: function(content, filename){
+        updateText: function(content, filename){
             // document.getElementById("reader").value = content;
             this.filename = filename;
             this.selectedFile = content;
+        },
+        updateSelectedLanguage: function(language, direction){
+            if (direction == 'source'){
+                this.sourceLanguage = language;
+            }else{
+                this.targetLanguage = language;
+            }
         },
         updateTranslationDetails: function(translationDetails){
             this.translationDetails = translationDetails;
@@ -114,6 +148,12 @@ export default {
         },
         cancelEdit: function(){
             this.displayEditModal = false;
+        },
+        highlighFile: function(){
+
+        },
+        clearFile: function(){
+
         }
     }
     
@@ -123,5 +163,13 @@ export default {
 
 <style scoped>
 
+.pointer {
+    cursor: pointer;
+}
+
+.scrollable {
+    height: 200px;
+    overflow-y: auto;
+}
 
 </style>

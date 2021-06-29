@@ -1,7 +1,7 @@
 <template>
 
-    <Button id="file-select" label="Select File" class="p-button-outlined" v-on:click="selectFile()"/>
-
+    <!-- <Button id="file-select" label="Select File" class="p-button-outlined" v-on:click="selectFile()"/> -->
+    <button type="button" class="btn btn-outline-primary" v-on:click="selectFile()">Select File</button>
 </template>
 
 <script>

@@ -1,12 +1,19 @@
 <template>
-
-
-    <div class="p-grid">
+    <!-- <div class="p-grid">
         <div class="p-col-8 p-offset-2 p-mt-5">
             <Reader language="english"/>
         </div>
-    </div>  
-    
+    </div>   -->
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-8">
+                <Reader language="english"/>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div> 
+     
 </template>
 
 <script>
