@@ -1,7 +1,26 @@
 <template>
 
+    <div class="border border-2 rounded shadow bg-body" style="height:800px">
+        <div class="m-0 bg-secondary" style="height:200px">
 
-    <Panel :header="title" class="p-shadow-5" style="height:800px">
+        </div>
+        <div class="d-flex flex-column justify-content-evenly" style="height:600px">
+            <span>Test</span>
+            <span>Test</span>
+            <span>Test</span>
+            <span>Test</span>
+            <span>Test</span>
+            <!-- <div class="">
+
+            </div>
+            <div class="border rounded shadow m-4" style="height:600px">
+
+            </div> -->
+        </div>
+        
+
+    </div>
+    <!-- <Panel :header="title" class="p-shadow-5" style="height:800px">
         <template #icons>
             <button class="p-panel-header-icon p-link p-mr-2" @click="toggle">
                 <span class="fas fa-ellipsis-v"></span>
@@ -25,23 +44,20 @@
             
             
         </div>
-        <!-- <div id="footer">
-            <span class="p-panel-header" style="width:100%">Translation Count: {{ translationCount }}</span>
-        </div> -->
-    </Panel>
+    </Panel> -->
     
 </template>
 
 <script>
 
-import Translatable from "./Translatable";
-import TranslatedText from "./TranslatedText";
+// import Translatable from "./Translatable";
+// import TranslatedText from "./TranslatedText";
 
 export default {
     name: "Translator",
     components: {
-        Translatable,
-        TranslatedText
+        // Translatable,
+        // TranslatedText
     },
     props: {
         source: {
@@ -162,7 +178,8 @@ export default {
         title: function(newValue){
             this.titleData = newValue;
         }
-    }
+    },
+    emits: ["translationsUpdated"]
 }
 
 </script>

@@ -1,7 +1,25 @@
 <template>
 
-    <TranslatorToolbar @fileSelected="updateText" @fileEdited="updateText" @highlightFile="highlightFile" @clearFile="clearFile"/>
-    <div class="p-grid">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-9 offset-3">
+                <TranslatorToolbar @fileUpdated="updateText" @languageUpdated="updateLanguage"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <TranslationDetails :translationDetails="translationDetails"/>
+            </div>
+            <div class="col-9">
+                <Translator :source="sourceLanguage" :target="targetLanguage" :text="file" :title="filename" @translationsUpdated="updateTranslationDetails"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Template -->
+
+    <!-- <div class="p-grid">
         <div class="p-col-4">
             <TranslationDetails :translationDetails="translationDetails"/>
         </div>
@@ -14,14 +32,20 @@
             <div class="p-d-flex p-jc-start p-mt-3">
                 <h3>Edit File</h3>
             </div>
-            
         </template>
         <Textarea v-model="editedFile" rows="10" cols="30" />
         <template #footer>
             <Button label="Save" icon="far fa-save" class="p-button-outlined" v-on:click="saveEdit()"/>
             <Button label="Cancel" icon="far fa-window-close" class="p-button-outlined" v-on:click="cancelEdit()"/>
         </template>
-    </Dialog>
+    </Dialog> -->
+
+
+
+    <!-- Original Template -->
+
+
+
     <!-- <div class="p-grid pt-2">
         <div class="p-col-8 p-offset-4">
             <div class="p-d-flex p-jc-between">
@@ -88,47 +112,49 @@ export default {
     },
     data: function(){
         return {
+            file: "",
             filename: "No file selected",
-            selectedFile: "",
-            editedFile: "",
+            
+            // editedFile: "",
             sourceLanguage: null,
             targetLanguage: null,
-            sourceDisplay: "Select Source",
-            targetDisplay: "Select Target",
-            languages: [
-                { name: 'Arabic', code: 'ar' },
-                { name: 'Chinese', code: 'zh' },
-                { name: 'Danish', code: 'dk' },
-                { name: 'Dutch', code: 'nl' },
-                { name: 'English', code: 'en' },
-                { name: 'French', code: 'fr' },
-                { name: 'German', code: 'de' },
-                { name: 'Greek', code: 'el' },
-                { name: 'Hebrew', code: 'he' },
-                { name: 'Italian', code: 'it' },
-                { name: 'Japanese', code: 'ja' },
-                { name: 'Korean', code: 'ko' },
-                { name: 'Latin', code: 'la' },
-                { name: 'Norwegian', code: 'no' },
-                { name: 'Polish', code: 'pl' },
-                { name: 'Portugese', code: 'pt' },
-                { name: 'Brazilian Portugese', code: 'br' },
-                { name: 'Russian', code: 'ru' },
-                { name: 'Spanish', code: 'es' },
-                { name: 'Swedish', code: 'sv' },
-                { name: 'Turkish', code: 'tr' },
-            ],
+            // sourceDisplay: "Select Source",
+            // targetDisplay: "Select Target",
+            // languages: [
+            //     { name: 'Arabic', code: 'ar' },
+            //     { name: 'Chinese', code: 'zh' },
+            //     { name: 'Danish', code: 'dk' },
+            //     { name: 'Dutch', code: 'nl' },
+            //     { name: 'English', code: 'en' },
+            //     { name: 'French', code: 'fr' },
+            //     { name: 'German', code: 'de' },
+            //     { name: 'Greek', code: 'el' },
+            //     { name: 'Hebrew', code: 'he' },
+            //     { name: 'Italian', code: 'it' },
+            //     { name: 'Japanese', code: 'ja' },
+            //     { name: 'Korean', code: 'ko' },
+            //     { name: 'Latin', code: 'la' },
+            //     { name: 'Norwegian', code: 'no' },
+            //     { name: 'Polish', code: 'pl' },
+            //     { name: 'Portugese', code: 'pt' },
+            //     { name: 'Brazilian Portugese', code: 'br' },
+            //     { name: 'Russian', code: 'ru' },
+            //     { name: 'Spanish', code: 'es' },
+            //     { name: 'Swedish', code: 'sv' },
+            //     { name: 'Turkish', code: 'tr' },
+            // ],
             translationDetails: {},
-            displayEditModal: false
+            // displayEditModal: false
         }
     },
     methods: {
-        updateText: function(content, filename){
+        updateText: function(file, filename){
             // document.getElementById("reader").value = content;
+            this.file = file;
             this.filename = filename;
-            this.selectedFile = content;
+            
         },
-        updateSelectedLanguage: function(language, direction){
+        updateLanguage: function(language, direction){
             if (direction == 'source'){
                 this.sourceLanguage = language;
             }else{

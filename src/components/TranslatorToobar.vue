@@ -5,26 +5,27 @@
             <button type="button" class="btn btn-outline-primary" v-on:click="selectFile()">Select File</button>
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">{{ sourceDisplay }}</button>
-                <ul class="dropdown-menu scrollable">
+                <ul class="dropdown-menu scrollable" style="height:200px">
                     <li v-for="language in languages" :key="language" v-on:click="languageSelected(language, 'source')" class="dropdown-item pointer">{{ language.name }}</li>
                 </ul>
             </div>
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">{{ targetDisplay }}</button>
-                <ul class="dropdown-menu scrollable">
+                <ul class="dropdown-menu scrollable" style="height:200px">
                     <li v-for="language in languages" :key="language" v-on:click="languageSelected(language, 'target')" class="dropdown-item pointer">{{ language.name }}</li>
                 </ul>
             </div>
-            
-            
         </div>
         <div class="btn-group">
-            <button type="button" class="btn btn-outline-primary" v-on:click="editFile()"><i class="far fa-edit me-2"></i>Edit</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#edit-modal" data-bs-backdrop="static"><i class="far fa-edit me-2"></i>Edit</button>
             <button type="button" class="btn btn-outline-primary" v-on:click="highlightFile()"><i class="fas fa-exchange-alt me-2"></i>Translate</button>
             <button type="button" class="btn btn-outline-primary" v-on:click="clearFile()"><i class="fas fa-undo me-2"></i>Clear</button>
         </div>
     </div>
-    <div v-if="displayEditModal" class="modal" tabindex="-1">
+
+
+    
+    <div id="edit-modal" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -32,18 +33,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <textarea id="text-editor" class="form-control"></textarea>
+                    <textarea id="text-editor" class="form-control scrollable" v-model="edit"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" v-on:click="clearFile()"><i class="far fa-fa-save"></i>Save</button>
-                    <button type="button" class="btn btn-outline-primary" v-on:click="clearFile()"><i class="far fa-window-close"></i>Cancel</button>
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" v-on:click="saveEdit()"><i class="far fa-save me-2"></i>Save</button>
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" v-on:click="cancelEdit()"><i class="far fa-window-close me-2"></i>Cancel</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 </template>
 
 <script>
@@ -57,6 +55,7 @@ export default {
         return {
             file: "",
             filename: "",
+            edit: "",
             sourceDisplay: "Select Source",
             targetDisplay: "Select Target",
             languages: [
@@ -82,7 +81,6 @@ export default {
                 { name: 'Swedish', code: 'sv' },
                 { name: 'Turkish', code: 'tr' },
             ],
-            displayEditModal: false
         }
     },
     methods: {
@@ -108,48 +106,48 @@ export default {
 
                     this.file = content;
                     this.filename = filename;
+                    this.edit = content;
                     
 
-                    this.$emit('fileSelected', this.file, this.filename);
+                    this.$emit('fileUpdated', this.file, this.filename);
                 }
             }
 
             input.click();
 
-        
             return false;
         },
-        editFile: function(){
-            var textEditor = document.getElementById('text-editor');
-            textEditor.value = this.file;
-            this.displayEditModal = true;
-        },
         saveEdit: function(){
-            var textEditor = document.getElementById('text-editor');
-            this.file = textEditor.value;
-            this.displayEditModal = false;
-            this.$emit('fileEdited', this.file, this.filename);
+            this.file = this.edit;
+            this.$emit('fileUpdated', this.file, this.filename);
         },
-        cancelEdit: function(){
-            this.displayEditModal = false;
+        cancelEdit :function(){
+            this.edit = this.file;
         },
         highlighFile: function(){
-            this.$emit('highlighFile');
+            // this.$emit('highlighFile');
         },
         clearFile: function(){
-            this.$emit('clearFile');
+            this.file = "";
+            this.filename = "";
+            this.$emit('fileUpdated', this.file, this.filename);
+            this.edit = "";
         },
         languageSelected: function(language, languageType){
             if (languageType == 'source'){
                 this.sourceDisplay = language.name;
-                this.$emit('languageSelected', language, 'source');
+                this.$emit('languageUpdated', language, 'source');
             }else{
                 this.targetDisplay = language.name;
-                this.$emit('languageSelected', language, 'target');
+                this.$emit('languageUpdated', language, 'target');
             }
             
         }
-    }
+    },
+    watch: {
+
+    },
+    emits: ['fileUpdated', 'languageUpdated']
 }
 
 </script>
@@ -161,7 +159,6 @@ export default {
 }
 
 .scrollable {
-    height: 200px;
     overflow-y: auto;
 }
 
