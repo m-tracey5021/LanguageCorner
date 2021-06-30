@@ -29,11 +29,11 @@ import "../buzz.css";
 import "../underline.css"
 import "../grow.css";
 
-// import "popper.js";
-
 import "bootstrap";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./bootstrap.mod.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+
+// import "./main.css";
 
 // import "../bootstrap.min.css";
 // import "../bootstrap.bundle.min.js";

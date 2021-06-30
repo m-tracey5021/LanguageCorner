@@ -1,18 +1,12 @@
 <template>
-    <!-- <div class="p-grid">
-        <div class="p-col-8 p-offset-2 p-mt-5">
-            <Reader language="english"/>
-        </div>
-    </div>   -->
-    <div class="container">
+    <!-- <div class="container">
         <div class="row justify-content-center">
-            <!-- <div class="col"></div> -->
-            <div class="col-md-auto">
+            <div class="col">
                 <Reader language="english"/>
             </div>
-            <!-- <div class="col"></div> -->
         </div>
-    </div> 
+    </div>  -->
+    <Dropdown :items="items"/>
      
 </template>
 
@@ -20,18 +14,33 @@
 
 // import * as translationServiceImport from "./services/translationService.js";
 
-import Reader from "./components/Reader";
+// import Reader from "./components/Reader";
+import Dropdown from "./components/Dropdown";
 
 export default {
     name: 'App',
     components: {
-        Reader,
+        // Reader,
+        Dropdown,
     },
-    // provide(){
-    //     return {
-    //         translationService: "injected"
-    //     }
-    // }
+    data: function(){
+        return {
+            items: [
+              { label: "First", command: () => { console.log('first'); }},
+              { label: "Second", command: () => { console.log('second'); }},
+              { label: "Third", command: () => { console.log('third'); }, children: [
+                  { label: "Third-First", command: () => { console.log('third-first'); }},
+                  { label: "Third-Second", command: () => { console.log('third-second'); }, children: [
+                      { label: "Third-First-First", command: () => { console.log('third-first-first'); }},
+                      { label: "Third-First-Second", command: () => { console.log('third-first-second'); }}
+                  ]}  
+              ]},
+            ],
+        }
+    },
+    methods: {
+
+    }
 }
 
 </script>

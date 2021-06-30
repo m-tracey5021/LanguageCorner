@@ -23,3 +23,9 @@
 # npm install primeflex --save
 
 # npm install primeicons --save
+
+# npm install -g sass
+
+# naivgate to where the custom scss file is
+
+# sass bootstrap.mod.scss bootstrap.mod.css

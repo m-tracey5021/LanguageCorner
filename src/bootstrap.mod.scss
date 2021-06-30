@@ -1,0 +1,115 @@
+
+
+
+
+// $primary: #707070;
+// $secondary: #e6e6e6;
+    
+// @import "../node_modules/bootstrap/scss/bootstrap";
+
+// $custom-colors: (
+//   "yellow-mod-1": #ffe19c,
+//   "yellow-mod-2": #ffd87d,
+//   "yellow-mod-3": #ffcf5e
+// );
+
+// // Merge the maps
+// $theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/bootstrap/scss/functions";
+
+
+$primary: #7c7c7c;
+$secondary: #e6e6e6;
+$yellow-mod-0: #fff3d5;
+$yellow-mod-1: #ffe19c;
+$yellow-mod-2: #ffd87d;
+$yellow-mod-3: #ffcf5e;
+
+$headings-margin-bottom: 0rem;
+
+// $dropdown-bg: $yellow-mod-0;
+// $dropdown-divider-bg: $yellow-mod-1;
+    
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// $custom-colors: (
+//   "yellow-mod-1": #ffe19c,
+//   "yellow-mod-2": #ffd87d,
+//   "yellow-mod-3": #ffcf5e
+// );
+
+$custom-colors: (
+    "yellow-mod-0": $yellow-mod-0,
+    "yellow-mod-1": $yellow-mod-1,
+    "yellow-mod-2": $yellow-mod-2,
+    "yellow-mod-3": $yellow-mod-3
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "../node_modules/bootstrap/scss/utilities";
+
+@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+@import "../node_modules/bootstrap/scss/images";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/tables";
+@import "../node_modules/bootstrap/scss/forms";
+@import "../node_modules/bootstrap/scss/buttons";
+@import "../node_modules/bootstrap/scss/transitions";
+@import "../node_modules/bootstrap/scss/dropdown";
+@import "../node_modules/bootstrap/scss/button-group";
+@import "../node_modules/bootstrap/scss/nav";
+@import "../node_modules/bootstrap/scss/navbar";
+@import "../node_modules/bootstrap/scss/card";
+@import "../node_modules/bootstrap/scss/accordion";
+@import "../node_modules/bootstrap/scss/breadcrumb";
+@import "../node_modules/bootstrap/scss/pagination";
+@import "../node_modules/bootstrap/scss/badge";
+@import "../node_modules/bootstrap/scss/alert";
+@import "../node_modules/bootstrap/scss/progress";
+@import "../node_modules/bootstrap/scss/list-group";
+@import "../node_modules/bootstrap/scss/close";
+@import "../node_modules/bootstrap/scss/toasts";
+@import "../node_modules/bootstrap/scss/modal";
+@import "../node_modules/bootstrap/scss/tooltip";
+@import "../node_modules/bootstrap/scss/popover";
+@import "../node_modules/bootstrap/scss/carousel";
+@import "../node_modules/bootstrap/scss/spinners";
+@import "../node_modules/bootstrap/scss/offcanvas";
+
+// Helpers
+@import "../node_modules/bootstrap/scss/helpers";
+
+// Utilities
+@import "../node_modules/bootstrap/scss/utilities/api";
+// scss-docs-end import-stack
+
+$two-color-btns: (
+    "yellow-mod-0-dark": (
+        $yellow-mod-0: $dark,
+    ),
+    "yellow-mod-1-dark": (
+        $yellow-mod-1: $dark,
+    ),
+    "yellow-mod-2-dark": (
+        $yellow-mod-2: $dark,
+    ),
+    "yellow-mod-3-dark": (
+        $yellow-mod-3: $dark,
+    )
+
+);
+
+@each $color, $value in $two-color-btns {
+    @each $other, $black in $value {
+        .btn-#{$color} {
+            @include button-variant($other, $black);
+        }
+    }
+}

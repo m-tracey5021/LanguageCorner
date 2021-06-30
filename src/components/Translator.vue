@@ -1,25 +1,64 @@
 <template>
 
     <div class="border border-2 rounded shadow bg-body" style="height:800px">
-        <div class="m-0 bg-secondary" style="height:200px">
-
-        </div>
-        <div class="d-flex flex-column justify-content-evenly" style="height:600px">
-            <span>Test</span>
-            <span>Test</span>
-            <span>Test</span>
-            <span>Test</span>
-            <span>Test</span>
-            <!-- <div class="">
-
+        <div class="m-0 p-4 bg-secondary border border-primary rounded-top">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="h4 text-center">{{ title }}</p>
+                <div class="dropdown">
+                    <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li class="dropdown-submenu">
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item">Item 1</li>
+                                <li class="dropdown-item">Item 2</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-item">Item 3</li>
+                                <li class="dropdown-item">Item 4</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" class="rounded-circle" data-bs-toggle="dropdown">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">Item 1</li>
+                            <li class="dropdown-item">Item 2</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">Item 3</li>
+                            <li class="dropdown-item">Item 4</li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <div class="border rounded shadow m-4" style="height:600px">
-
-            </div> -->
+        </div>
+        <div class="p-4 d-flex flex-wrap justify-content-center overflow-auto" style="height:600px">
+            <span v-for="word in originalData" :key="word">
+                <span v-if="isTranslated(word)">
+                    <TranslatedText :translationDetails="getTranslated(word)" :showTooltip="false" @translationSelected="updateTranslationData"/>
+                </span>
+                <span v-else>
+                    <Translatable :source="sourceData" :target="targetData" :original="word" @translated="updateTranslationData"/>
+                </span>
+            </span>
         </div>
         
-
     </div>
+
+
     <!-- <Panel :header="title" class="p-shadow-5" style="height:800px">
         <template #icons>
             <button class="p-panel-header-icon p-link p-mr-2" @click="toggle">
@@ -50,14 +89,14 @@
 
 <script>
 
-// import Translatable from "./Translatable";
-// import TranslatedText from "./TranslatedText";
+import Translatable from "./Translatable";
+import TranslatedText from "./TranslatedText";
 
 export default {
     name: "Translator",
     components: {
-        // Translatable,
-        // TranslatedText
+        Translatable,
+        TranslatedText
     },
     props: {
         source: {
@@ -185,6 +224,11 @@ export default {
 </script>
 
 <style scoped>
+
+.dropdown-submenu {
+    position: absolute;
+    
+}
 
 .scrollable {
     height: 620px;
