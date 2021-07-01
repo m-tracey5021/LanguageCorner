@@ -6,7 +6,15 @@
             </div>
         </div>
     </div>  -->
-    <Dropdown :items="items"/>
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col"></div>
+            <div class="col">
+                <Dropdown :items="items"/>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div> 
      
 </template>
 
@@ -26,15 +34,20 @@ export default {
     data: function(){
         return {
             items: [
-              { label: "First", command: () => { console.log('first'); }},
-              { label: "Second", command: () => { console.log('second'); }},
+              { label: "First", command: () => { console.log('first'); } },
+              { label: "Second", command: () => { console.log('second'); } },
               { label: "Third", command: () => { console.log('third'); }, children: [
-                  { label: "Third-First", command: () => { console.log('third-first'); }},
+                  { label: "Third-First", command: () => { console.log('third-first'); } },
                   { label: "Third-Second", command: () => { console.log('third-second'); }, children: [
-                      { label: "Third-First-First", command: () => { console.log('third-first-first'); }},
-                      { label: "Third-First-Second", command: () => { console.log('third-first-second'); }}
+                      { label: "Third-First-First", command: () => { console.log('third-first-first'); } },
+                      { label: "Third-First-Second", command: () => { console.log('third-first-second'); }, children: [
+                          { label: "3-1-2-1", command: () => { console.log('3-1-2-1'); } },
+                          { label: "3-1-2-2", command: () => { console.log('3-1-2-2'); } },
+                          { label: "3-1-2-3", command: () => { console.log('3-1-2-3'); } }
+                      ]}
                   ]}  
               ]},
+              { label: "Fourth", command: () => { console.log('fourth'); }}
             ],
         }
     },

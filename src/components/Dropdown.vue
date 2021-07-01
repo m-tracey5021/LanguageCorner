@@ -1,31 +1,15 @@
 <template>
 
-    <!-- <div class="d-flex flex-column justify-content-start"> -->
-        <!-- <button class="btn btn-secondary dropdown-toggle" type="button" v-on:click="toggleDropdown">
-            Dropdown button
-        </button> -->
-        <!-- <div v-if="displayDropdownData" class="container p-2">
-            <div class="row">
-                <DropdownItem v-for="item in itemData" :key="item" :label="item.label" :command="item.command" :children="item.children" class="col-md-10 offset-md-1"/>
-            </div>
-            
-        </div> -->
-
-
-        
-    <!-- </div> -->
-
     <div class="mt-dropdown-container">
-        <button class="mt-dropdown-btn" type="button" v-on:click="toggleDropdown">
+        <button class="btn btn-outline-primary dropdown-toggle mt-dropdown-btn" type="button" v-on:click="toggleDropdown">
             Dropdown button
         </button>
-        <ul v-if="displayDropdownData" class="mt-dropdown ">
-            <!-- <div class="row"> -->
+        <ul v-if="displayDropdownData" class="mt-dropdown">
             <DropdownItem v-for="item in itemData" :key="item" :label="item.label" :command="item.command" :children="item.children"/>
-            <!-- </div> -->
-            
         </ul>
     </div>
+
+
 
 </template>
 
@@ -66,29 +50,25 @@ export default {
     cursor: pointer;
 }
 
+
+
 .mt-dropdown-container {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
     
 
-}
-
-.mt-dropdown-container .mt-dropdown-btn {
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    top: 10px;
-    bottom: 10px;
 }
 
 .mt-dropdown-container .mt-dropdown {
-    
-    position: absolute;
-    left: 50%;
-    right: 50%;
-    top: 100px;
     list-style-type: none;
     margin: 0;
     padding: 0;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* max-height: 100px; */
+    /* overflow-y: auto; */
 }
 
 
