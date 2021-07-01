@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
           <div class="col"></div>
             <div class="col">
-                <Dropdown :items="items"/>
+                <Dropdown text="Select a position" :items="items"/>
             </div>
             <div class="col"></div>
         </div>
@@ -34,11 +34,11 @@ export default {
     data: function(){
         return {
             items: [
-              { label: "First", command: () => { console.log('first'); } },
-              { label: "Second", command: () => { console.log('second'); } },
+              { label: "First", icon: "far fa-angry", command: () => { console.log('first'); } },
+              { label: "Second", icon: "fas fa-archway", command: () => { console.log('second'); } },
               { label: "Third", command: () => { console.log('third'); }, children: [
                   { label: "Third-First", command: () => { console.log('third-first'); } },
-                  { label: "Third-Second", command: () => { console.log('third-second'); }, children: [
+                  { label: "Third-Second", icon: "fas fa-map-marker", command: () => { console.log('third-second'); }, children: [
                       { label: "Third-First-First", command: () => { console.log('third-first-first'); } },
                       { label: "Third-First-Second", command: () => { console.log('third-first-second'); }, children: [
                           { label: "3-1-2-1", command: () => { console.log('3-1-2-1'); } },

@@ -2,24 +2,11 @@
 
 
 
-// $primary: #707070;
-// $secondary: #e6e6e6;
-    
-// @import "../node_modules/bootstrap/scss/bootstrap";
-
-// $custom-colors: (
-//   "yellow-mod-1": #ffe19c,
-//   "yellow-mod-2": #ffd87d,
-//   "yellow-mod-3": #ffcf5e
-// );
-
-// // Merge the maps
-// $theme-colors: map-merge($theme-colors, $custom-colors);
 
 @import "../node_modules/bootstrap/scss/functions";
 
 
-$primary: #7c7c7c;
+// $primary: #c2c2c2;
 $secondary: #e6e6e6;
 $yellow-mod-0: #fff3d5;
 $yellow-mod-1: #ffe19c;
@@ -27,18 +14,9 @@ $yellow-mod-2: #ffd87d;
 $yellow-mod-3: #ffcf5e;
 
 $headings-margin-bottom: 0rem;
-
-// $dropdown-bg: $yellow-mod-0;
-// $dropdown-divider-bg: $yellow-mod-1;
     
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
-
-// $custom-colors: (
-//   "yellow-mod-1": #ffe19c,
-//   "yellow-mod-2": #ffd87d,
-//   "yellow-mod-3": #ffcf5e
-// );
 
 $custom-colors: (
     "yellow-mod-0": $yellow-mod-0,

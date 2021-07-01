@@ -4,28 +4,7 @@
         <div class="m-0 p-4 bg-secondary border border-primary rounded-top">
             <div class="d-flex justify-content-between align-items-center">
                 <p class="h4 text-center">{{ title }}</p>
-                <div class="dropdown">
-                    <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown">
-                        Dropdown button
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        <li class="dropdown-submenu">
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item">Item 1</li>
-                                <li class="dropdown-item">Item 2</li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu">
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item">Item 3</li>
-                                <li class="dropdown-item">Item 4</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+                
                 <button type="button" class="rounded-circle" data-bs-toggle="dropdown">
                     <i class="fas fa-ellipsis-v"></i>
                 </button>
