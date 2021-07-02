@@ -160,7 +160,11 @@ export default {
                 { label: "Font Size", icon: "fas fa-font", children: [
                     { label: "Large", command: () => { this.setFontSize("20px"); } },
                     { label: "Medium",  command: () => { this.setFontSize("16px"); } },
-                    { label: "Small",  command: () => { this.setFontSize("12px"); } },
+                    { label: "Small",  children: [
+                        { label: "12px", command: () => { this.setFontSize("12px"); } },
+                        { label: "10px", command: () => { this.setFontSize("10px"); } },
+                        { label: "8px", command: () => { this.setFontSize("8px"); } }
+                    ]},
                 ]},
                 { label: "Alignment", icon: "fas fa-align-center", children: [
                     { label: "Left", command: () => { this.alignText('left'); } },

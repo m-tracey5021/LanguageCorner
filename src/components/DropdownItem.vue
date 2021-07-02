@@ -8,7 +8,7 @@
             <div class="item-label">{{ labelData }}</div>
         </div>
     </li> 
-    <li v-else class="mt-dropdown-submenu-toggle">
+    <li v-else v-on:mouseenter="displayChild" v-on:mouseleave="hideChild" class="mt-dropdown-submenu-toggle">
         <!-- <div v-on:click="toggleChild" class="mt-dropdown-item">
             <div class="item-content">
                 <i v-bind:class="iconData"></i>
@@ -18,7 +18,7 @@
             <i v-bind:id="menuItemIdData" class="fas fa-angle-right"></i>   
 
         </div> -->
-        <div v-on:mouseover="displayChild" v-on:mouseleave="hideChild" class="mt-dropdown-item">
+        <div class="mt-dropdown-item">
             <div class="item-content">
                 <i v-bind:class="iconData"></i>
                 <div class="item-label">{{ labelData }}</div>
@@ -28,7 +28,7 @@
 
         </div>
         
-        <ul v-if="displayChildData" v-on:mouseover="displayChild" v-on:mouseleave="hideChild" class="mt-dropdown-submenu">
+        <ul v-if="displayChildData" class="mt-dropdown-submenu">
             <DropdownItem v-for="(child, index) in childrenData" :key="child" :menuItemId="menuItemIdData + '-' + index" :label="child.label" :icon="child.iconData" :command="child.command" :children="child.children"/>
         </ul>
     </li>  
