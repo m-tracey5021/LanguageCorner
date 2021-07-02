@@ -1,30 +1,21 @@
 <template>
 
-    <div class="border border-2 rounded shadow bg-body" style="height:800px">
+    <div class="border border-2 rounded shadow" style="height:800px">
         <div class="m-0 p-4 bg-secondary border border-primary rounded-top">
             <div class="d-flex justify-content-between align-items-center">
                 <p class="h4 text-center">{{ title }}</p>
+                 <Dropdown :items="items" ref="dropdown">
+                    <template v-slot:dropdown-btn>
+                        <button class="btn btn-no-outline-primary btn-icon-sm" type="button" v-on:click="$refs.dropdown.toggleDropdown()">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </template>
+                    
+                </Dropdown>
                 
-                <button type="button" class="rounded-circle" data-bs-toggle="dropdown">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
-                <ul class="dropdown-menu">
-                    <li class="dropdown-submenu">
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item">Item 1</li>
-                            <li class="dropdown-item">Item 2</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item">Item 3</li>
-                            <li class="dropdown-item">Item 4</li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
         </div>
-        <div class="p-4 d-flex flex-wrap justify-content-center overflow-auto" style="height:600px">
+        <div  id="text-panel" class="p-4 d-flex flex-wrap justify-content-center overflow-auto" style="height:600px">
             <span v-for="word in originalData" :key="word">
                 <span v-if="isTranslated(word)">
                     <TranslatedText :translationDetails="getTranslated(word)" :showTooltip="false" @translationSelected="updateTranslationData"/>
@@ -68,12 +59,14 @@
 
 <script>
 
+import Dropdown from "./Dropdown";
 import Translatable from "./Translatable";
 import TranslatedText from "./TranslatedText";
 
 export default {
     name: "Translator",
     components: {
+        Dropdown,
         Translatable,
         TranslatedText
     },
@@ -113,6 +106,24 @@ export default {
                 elements[i].style.fontSize = size;
             }
         },
+        alignText: function(alignment){
+            var textClass = document.getElementById("text-panel").classList;
+            if (alignment == 'left'){
+                textClass.add('justify-content-start');
+                textClass.remove('justify-content-center');
+                textClass.remove('justify-content-end');
+            }else if (alignment == 'center'){
+                textClass.remove('justify-content-start');
+                textClass.add('justify-content-center');
+                textClass.remove('justify-content-end');
+            }else if (alignment == 'right'){
+                textClass.remove('justify-content-start');
+                textClass.remove('justify-content-center');
+                textClass.add('justify-content-end');
+            }else{
+                // throw
+            }
+        },
         isTranslated: function(word){
             for (var i = 0; i < this.translationData.length; i ++){
                 if (this.translationData[i].original == word){
@@ -145,42 +156,17 @@ export default {
             translationData: [],
             translationCount: 0,
             titleData: this.title,
-            menuItems: [
-                {
-                    label: "Font Size",
-                    items: 
-                    [
-                        { label: "Large", icon: "fas fa-font fa-lg", command: () => { this.setFontSize("20px"); }},
-                        { label: "Medium",  icon: "fas fa-font", command: () => { this.setFontSize("16px"); }},
-                        { label: "Small",  icon: "fas fa-font fa-xs", command: () => { this.setFontSize("12px"); }},
-
-                    ]
-                },
-                {
-                    label: "Alignment",
-                    items: 
-                    [
-                        { label: "Left", icon: "fas fa-align-left", command: () => { 
-                            var textClass = document.getElementById("text-panel").classList;
-                            textClass.add("p-jc-start");
-                            textClass.remove("p-jc-center");
-                            textClass.remove("p-jc-end");
-                        }},
-                        { label: "Center", icon: "fas fa-align-center", command: () => { 
-                            var textClass = document.getElementById("text-panel").classList;
-                            textClass.remove("p-jc-start");
-                            textClass.add("p-jc-center");
-                            textClass.remove("p-jc-end");
-                        }},
-                        { label: "Right", icon: "fas fa-align-right", command: () => { 
-                            var textClass = document.getElementById("text-panel").classList;
-                            textClass.remove("p-jc-start");
-                            textClass.remove("p-jc-center");
-                            textClass.add("p-jc-end");    
-                        }},
-
-                    ]
-                }
+            items: [
+                { label: "Font Size", icon: "fas fa-font", children: [
+                    { label: "Large", command: () => { this.setFontSize("20px"); } },
+                    { label: "Medium",  command: () => { this.setFontSize("16px"); } },
+                    { label: "Small",  command: () => { this.setFontSize("12px"); } },
+                ]},
+                { label: "Alignment", icon: "fas fa-align-center", children: [
+                    { label: "Left", command: () => { this.alignText('left'); } },
+                    { label: "Center", command: () => { this.alignText('center'); } },
+                    { label: "Right", command: () => { this.alignText('right') } },
+                ]},
             ],
             loaded: false
         }

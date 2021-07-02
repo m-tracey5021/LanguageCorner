@@ -1,20 +1,29 @@
 <template>
-    <!-- <div class="container">
+    <div class="container p-3">
         <div class="row justify-content-center">
             <div class="col">
                 <Reader language="english"/>
             </div>
         </div>
-    </div>  -->
-    <div class="container">
-        <div class="row justify-content-center">
+    </div> 
+
+
+    <!-- <div class="container">
+        <div class="row justify-content-center pt-4">
           <div class="col"></div>
             <div class="col">
-                <Dropdown text="Select a position" :items="items"/>
+                <Dropdown text="Select a position" :items="items" ref="dropdown">
+                    <template v-slot:dropdown-btn>
+                        <button class="btn btn-outline-primary btn-icon-sm-sq" type="button" v-on:click="this.$refs.dropdown.toggleDropdown()">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </template>
+                    
+                </Dropdown>
             </div>
             <div class="col"></div>
         </div>
-    </div> 
+    </div>  -->
      
 </template>
 
@@ -22,33 +31,20 @@
 
 // import * as translationServiceImport from "./services/translationService.js";
 
-// import Reader from "./components/Reader";
-import Dropdown from "./components/Dropdown";
+import Reader from "./components/Reader";
+// import Dropdown from "./components/Dropdown";
+// import FileSelector from './components/FileSelector.vue';
 
 export default {
     name: 'App',
     components: {
-        // Reader,
-        Dropdown,
+        Reader,
+        // Dropdown,
+        // FileSelector,
     },
     data: function(){
         return {
-            items: [
-              { label: "First", icon: "far fa-angry", command: () => { console.log('first'); } },
-              { label: "Second", icon: "fas fa-archway", command: () => { console.log('second'); } },
-              { label: "Third", command: () => { console.log('third'); }, children: [
-                  { label: "Third-First", command: () => { console.log('third-first'); } },
-                  { label: "Third-Second", icon: "fas fa-map-marker", command: () => { console.log('third-second'); }, children: [
-                      { label: "Third-First-First", command: () => { console.log('third-first-first'); } },
-                      { label: "Third-First-Second", command: () => { console.log('third-first-second'); }, children: [
-                          { label: "3-1-2-1", command: () => { console.log('3-1-2-1'); } },
-                          { label: "3-1-2-2", command: () => { console.log('3-1-2-2'); } },
-                          { label: "3-1-2-3", command: () => { console.log('3-1-2-3'); } }
-                      ]}
-                  ]}  
-              ]},
-              { label: "Fourth", command: () => { console.log('fourth'); }}
-            ],
+            
         }
     },
     methods: {

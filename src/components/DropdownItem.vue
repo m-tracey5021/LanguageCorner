@@ -2,29 +2,34 @@
 
 
 
-    <li v-if="children.length == 0" v-on:click="commandData" class="mt-dropdown-item">
+    <li v-if="children.length == 0" v-on:click="triggerCommand" class="mt-dropdown-item">
         <div class="item-content">
             <i v-bind:class="iconData"></i>
-            <div>{{ labelData }}</div>
+            <div class="item-label">{{ labelData }}</div>
         </div>
     </li> 
     <li v-else class="mt-dropdown-submenu-toggle">
-        <div v-on:click="toggleChild" class="mt-dropdown-item">
+        <!-- <div v-on:click="toggleChild" class="mt-dropdown-item">
             <div class="item-content">
                 <i v-bind:class="iconData"></i>
-                <div>{{ labelData }}</div>
+                <div class="item-label">{{ labelData }}</div>
             </div>
 
-            <!-- <div> -->
-            <i v-bind:id="menuIdData" class="fas fa-angle-right"></i>    
-            <!-- </div> -->
+            <i v-bind:id="menuItemIdData" class="fas fa-angle-right"></i>   
 
-            <!-- <div>{{ labelData }}</div>
-            <i v-bind:id="menuIdData" class="fas fa-angle-right"></i> -->
+        </div> -->
+        <div v-on:mouseover="displayChild" v-on:mouseleave="hideChild" class="mt-dropdown-item">
+            <div class="item-content">
+                <i v-bind:class="iconData"></i>
+                <div class="item-label">{{ labelData }}</div>
+            </div>
+
+            <i v-bind:id="menuItemIdData" class="fas fa-angle-right"></i>   
+
         </div>
         
-        <ul v-if="displayChildData" class="mt-dropdown-submenu">
-            <DropdownItem v-for="child in childrenData" :key="child" :menuId="menuIdData + 1" :label="child.label" :icon="iconData" :command="child.command" :children="child.children"/>
+        <ul v-if="displayChildData" v-on:mouseover="displayChild" v-on:mouseleave="hideChild" class="mt-dropdown-submenu">
+            <DropdownItem v-for="(child, index) in childrenData" :key="child" :menuItemId="menuItemIdData + '-' + index" :label="child.label" :icon="child.iconData" :command="child.command" :children="child.children"/>
         </ul>
     </li>  
 
@@ -35,8 +40,8 @@
 export default {
     name: 'DropdownItem',
     props: {
-        menuId: {
-            type: Number,
+        menuItemId: {
+            type: String,
             required: true
         },
         label: {
@@ -58,7 +63,7 @@ export default {
     },
     data: function(){
         return {
-            menuIdData: this.menuId,
+            menuItemIdData: this.menuItemId,
             labelData: this.label,
             iconData: this.icon + " item-icon",
             commandData: this.command,
@@ -67,9 +72,13 @@ export default {
         }
     },
     methods: {
+        triggerCommand: function(){
+            this.$emit('itemSelected');
+            this.commandData();
+        },
         toggleChild: function(){
-
-            var arrow = document.getElementById(this.menuIdData).classList;
+            
+            var arrow = document.getElementById(this.menuItemIdData).classList;
             if (arrow.contains('rotate-down')){
                 arrow.remove('rotate-down');
                 arrow.add('rotate-up');
@@ -78,9 +87,26 @@ export default {
                 arrow.add('rotate-down');
             }
             this.displayChildData = !this.displayChildData;
+            this.$emit('childToggled');
+        },
+        displayChild: function(){
+            var arrow = document.getElementById(this.menuItemIdData).classList;
+
+            arrow.remove('rotate-up');
+            arrow.add('rotate-down');
+            
+            this.displayChildData = true;
+        },
+        hideChild: function(){
+            var arrow = document.getElementById(this.menuItemIdData).classList;
+
+            arrow.add('rotate-up');
+            arrow.remove('rotate-down');
+            
+            this.displayChildData = false;
         }
     },
-    emits: ['itemSelected']
+    emits: ['itemSelected', 'childToggled']
 }
 
 </script>
@@ -92,10 +118,16 @@ export default {
     margin-bottom: 5px;
 }
 
+.item-label {
+    white-space: nowrap;
+}
+
 .item-content {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    /* width: calc(100% + 20px); */
+    margin-right: 10px;
 }
 
 
@@ -116,7 +148,7 @@ export default {
 
 .mt-dropdown-submenu-toggle {
     position: relative;
-    min-width: 200px;   
+    /* min-width: 200px;    */
 }
 
 .mt-dropdown-submenu-toggle .mt-dropdown-submenu {
@@ -126,7 +158,7 @@ export default {
     list-style-type: none;
     margin: 2, 2, 2, 2;
     padding: 0;
-    border: 1px solid rgba(106, 106, 106, 0.2);
+    border: 1px solid rgba(106, 106, 106, 0.3);
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 

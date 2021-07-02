@@ -68,6 +68,121 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "../node_modules/bootstrap/scss/utilities/api";
 // scss-docs-end import-stack
 
+
+
+// .btn-circle.btn-sm {
+//     width: 30px;
+//     height: 30px;
+//     padding: 6px 0px;
+//     border-radius: 15px;
+//     font-size: 8px;
+//     text-align: center;
+// }
+// .btn-circle.btn-md {
+//     width: 50px;
+//     height: 50px;
+//     padding: 7px 10px;
+//     border-radius: 25px;
+//     font-size: 10px;
+//     text-align: center;
+// }
+// .btn-circle.btn-xl {
+//     width: 70px;
+//     height: 70px;
+//     padding: 10px 16px;
+//     border-radius: 35px;
+//     font-size: 12px;
+//     text-align: center;
+// }
+
+.btn-icon-sm {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.btn-icon-md {
+    width: 50px;
+    height: 50px;
+    padding: 7px 10px;
+    border-radius: 25px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.btn-icon-sm-sq {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 2px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.btn-icon-md-sq {
+    width: 50px;
+    height: 50px;
+    padding: 7px 10px;
+    border-radius: 2px;
+    font-size: 20px;
+    text-align: center;
+}
+
+@mixin button-no-outline-variant(
+  $color,
+  $color-hover: color-contrast($color),
+  $active-background: $color,
+  $active-border: $color,
+  $active-color: color-contrast($active-background)
+) {
+  color: $color;
+
+  &:hover {
+    color: $color-hover;
+    background-color: $active-background;
+    border-color: $active-border;
+  }
+
+  .btn-check:focus + &,
+  &:focus {
+    box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  &.dropdown-toggle.show {
+    color: $active-color;
+    background-color: $active-background;
+    border-color: $active-border;
+
+    &:focus {
+      @if $enable-shadows {
+        @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($color, .5));
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $color;
+    background-color: transparent;
+  }
+}
+
+@each $color, $value in $theme-colors {
+    .btn-no-outline-#{$color} {
+        @include button-no-outline-variant($value);
+    }
+}
+
 $two-color-btns: (
     "yellow-mod-0-dark": (
         $yellow-mod-0: $dark,
