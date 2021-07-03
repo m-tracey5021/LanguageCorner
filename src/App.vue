@@ -1,29 +1,33 @@
 <template>
-    <div class="container p-3">
+    <!-- <div class="container p-3">
         <div class="row justify-content-center">
             <div class="col">
                 <Reader language="english"/>
             </div>
         </div>
-    </div> 
+    </div>  -->
 
 
-    <!-- <div class="container">
+    <div class="container">
         <div class="row justify-content-center pt-4">
           <div class="col"></div>
             <div class="col">
-                <Dropdown text="Select a position" :items="items" ref="dropdown">
-                    <template v-slot:dropdown-btn>
-                        <button class="btn btn-outline-primary btn-icon-sm-sq" type="button" v-on:click="this.$refs.dropdown.toggleDropdown()">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                    </template>
-                    
-                </Dropdown>
+                <Table title="Movies" :cols="tableData.cols" :rows="tableData.rows" :collapsible="true"/>
             </div>
-            <div class="col"></div>
+            <div class="col">
+                <Collapse>
+                    <template v-slot:content>
+                        <span>Slotted Content</span>
+                        <span>Slotted Content</span>
+                        <span>Slotted Content</span>
+                        <span>Slotted Content</span>
+                        <span>Slotted Content</span>
+                    </template>
+                </Collapse>
+            
+            </div>
         </div>
-    </div>  -->
+    </div> 
      
 </template>
 
@@ -31,20 +35,39 @@
 
 // import * as translationServiceImport from "./services/translationService.js";
 
-import Reader from "./components/Reader";
+// import Reader from "./components/Reader";
+import Table from "./components/Table";
+import Collapse from "./components/Collapse";
 // import Dropdown from "./components/Dropdown";
 // import FileSelector from './components/FileSelector.vue';
 
 export default {
     name: 'App',
     components: {
-        Reader,
+        // Reader,
+        Table,
+        Collapse
         // Dropdown,
         // FileSelector,
     },
     data: function(){
         return {
-            
+            tableData: {
+                "cols": [
+                    { label: 'Title' },
+                    { label: 'Date' },
+                    { label: 'Seen' }
+                ],
+                "rows": [
+                    [
+                        'Shawshank', '21-07-1998', 'No'
+                    ],
+                    [
+                        'Stuart Little', '28-10-2001', 'No'
+                    ]
+
+                ]
+            }
         }
     },
     methods: {
