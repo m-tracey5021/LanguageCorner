@@ -18,6 +18,7 @@ import TieredMenu from "primevue/tieredmenu";
 import Dropdown from "primevue/dropdown";
 import Dialog from 'primevue/dialog';
 import Textarea from 'primevue/textarea';
+import Toolbar from 'primevue/toolbar';
 
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
@@ -66,6 +67,7 @@ app.component("TieredMenu", TieredMenu);
 app.component("Dropdown", Dropdown);
 app.component("Dialog", Dialog);
 app.component("Textarea", Textarea);
+app.component("Toolbar", Toolbar);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
