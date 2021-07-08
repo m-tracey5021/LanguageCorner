@@ -10,7 +10,7 @@
         </template>
         <div class="p-panel-content p-shadow-1 scrollable">
             <div v-if="loaded" id="text-panel" class="p-d-flex p-flex-wrap p-jc-center">
-                <span v-for="word in originalData" :key="word">
+                <span v-for="word in textData" :key="word">
                     <span v-if="isTranslated(word)">
                         <TranslatedText :translationDetails="getTranslated(word)" :showTooltip="false" @translationSelected="updateTranslationData"/>
                     </span>
@@ -19,7 +19,7 @@
                     </span>
                 </span>
             </div>
-            <div v-else>
+            <div v-else class="p-d-flex p-jc-center p-ai-center">
                 <i class="fas fa-spinner fa-spin"/>
             </div>
             
@@ -34,21 +34,21 @@
 
 <script>
 
-import Translatable from "./Translatable";
-import TranslatedText from "./TranslatedText";
+import Translatable from './Translatable';
+import TranslatedText from './TranslatedText';
 
 export default {
-    name: "Translator",
+    name: 'Translator',
     components: {
         Translatable,
         TranslatedText
     },
     props: {
         source: {
-            type: Object
+            type: String
         },
         target: {
-            type: Object
+            type: String
         },
         text: {
             type: String,
@@ -58,59 +58,15 @@ export default {
             type: String
         },
     },
-    methods: {
-        // isAlpha: function(str){
-        //     return str.length === 1 && str.match(/[a-z]/i);
-        // },
-        // trim: function(word){
-        //     for (var i = 0; i < word.length; i ++){
-        //         if (!this.isAlpha(word.charAt(i))){
-        //             word = word.substring(0, i) + word.substring(i + 1);
-        //         }
-        //     }
-        //     return word.toLowerCase();
-        // },
-        toggle: function(event){
-            this.$refs.menu.toggle(event);
-        },
-        setFontSize: function(size){
-            var elements = document.getElementsByClassName("translatable");
-            for (var i = 0; i < elements.length; i ++){
-                elements[i].style.fontSize = size;
-            }
-        },
-        isTranslated: function(word){
-            for (var i = 0; i < this.translationData.length; i ++){
-                if (this.translationData[i].original == word){
-                    return true;
-                }
-            }
-            return false;
-        },
-        getTranslated: function(word){
-            for (var i = 0; i < this.translationData.length; i ++){
-                if (this.translationData[i].original == word){
-                    return this.translationData[i];
-                }
-            }
-            return {};
-        },
-        updateTranslationData: function(translationDetails, newTranslation){
-            if (newTranslation == true){
-                this.translationData.push(translationDetails);
-                this.translationCount ++;
-            }
-            this.$emit("translationsUpdated", translationDetails);
-        }
-    },
     data: function(){
         return {
             sourceData: this.source,
             targetData: this.target,
-            originalData: this.text.split(" "),
+            textData: this.text.split(" "),
+            titleData: this.title,
             translationData: [],
             translationCount: 0,
-            titleData: this.title,
+            
             menuItems: [
                 {
                     label: "Font Size",
@@ -151,10 +107,56 @@ export default {
             loaded: false
         }
     },
+    methods: {
+        // isAlpha: function(str){
+        //     return str.length === 1 && str.match(/[a-z]/i);
+        // },
+        // trim: function(word){
+        //     for (var i = 0; i < word.length; i ++){
+        //         if (!this.isAlpha(word.charAt(i))){
+        //             word = word.substring(0, i) + word.substring(i + 1);
+        //         }
+        //     }
+        //     return word.toLowerCase();
+        // },
+        toggle: function(event){
+            this.$refs.menu.toggle(event);
+        },
+        setFontSize: function(size){
+            var elements = document.getElementsByClassName('translatable');
+            for (var i = 0; i < elements.length; i ++){
+                elements[i].style.fontSize = size;
+            }
+        },
+        isTranslated: function(word){
+            for (var i = 0; i < this.translationData.length; i ++){
+                if (this.translationData[i].original == word){
+                    return true;
+                }
+            }
+            return false;
+        },
+        getTranslated: function(word){
+            for (var i = 0; i < this.translationData.length; i ++){
+                if (this.translationData[i].original == word){
+                    return this.translationData[i];
+                }
+            }
+            return {};
+        },
+        updateTranslationData: function(translationDetails, newTranslation){
+            if (newTranslation == true){
+                this.translationData.push(translationDetails);
+                this.translationCount ++;
+            }
+            this.$emit('translationsUpdated', translationDetails);
+        }
+    },
+    
     watch: {
         text: function(newValue){
             this.loaded = false;
-            this.originalData = newValue.split(" ");
+            this.originalData = newValue.split(' ');
             this.translationData = [];
             this.loaded = true;
             

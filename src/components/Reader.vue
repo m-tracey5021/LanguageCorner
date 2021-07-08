@@ -2,13 +2,13 @@
 
     <div class="p-grid">
         <div class="p-col-8 p-offset-4">
-            <TranslatorToolbar @fileUpdated="updateTextReader" @languageUpdated=""/>
+            <TranslatorToolbar @fileUpdated="updateText" @sourceUpdated="updateSource" @targetUpdated="updateTarget"/>
         </div>
         <div class="p-col-4">
             <TranslationDetails :translationDetails="translationDetails"/>
         </div>
         <div class="p-col-8">
-            <Translator :source="sourceLanguage" :target="targetLanguage" :text="selectedFile" :title="filename" @translationsUpdated="updateTranslationDetails"/>
+            <Translator :source="sourceLanguage" :target="targetLanguage" :text="text" :title="title" @translationsUpdated="updateTranslationDetails"/>
         </div>
     </div>
     
@@ -21,7 +21,7 @@ import TranslationDetails from './TranslationDetails';
 import Translator from './Translator';
 
 export default {
-    name: "Reader",
+    name: 'Reader',
     components: {
         
         TranslatorToolbar,
@@ -35,58 +35,28 @@ export default {
     },
     data: function(){
         return {
-            filename: "No file selected",
-            selectedFile: "",
-            editedFile: "",
-            sourceLanguage: null,
-            targetLanguage: null,
-            languages: [
-                { name: 'Arabic', code: 'ar' },
-                { name: 'Chinese', code: 'zh' },
-                { name: 'Danish', code: 'dk' },
-                { name: 'Dutch', code: 'nl' },
-                { name: 'English', code: 'en' },
-                { name: 'French', code: 'fr' },
-                { name: 'German', code: 'de' },
-                { name: 'Greek', code: 'el' },
-                { name: 'Hebrew', code: 'he' },
-                { name: 'Italian', code: 'it' },
-                { name: 'Japanese', code: 'ja' },
-                { name: 'Korean', code: 'ko' },
-                { name: 'Latin', code: 'la' },
-                { name: 'Norwegian', code: 'no' },
-                { name: 'Polish', code: 'pl' },
-                { name: 'Portugese', code: 'pt' },
-                { name: 'Brazilian Portugese', code: 'br' },
-                { name: 'Russian', code: 'ru' },
-                { name: 'Spanish', code: 'es' },
-                { name: 'Swedish', code: 'sv' },
-                { name: 'Turkish', code: 'tr' },
-            ],
+            text: '',
+            title: 'No file selected',
+            sourceLanguage: '',
+            targetLanguage: '',
             translationDetails: {},
-            displayEditModal: false
         }
     },
     methods: {
-        updateTextReader: function(content, filename){
-            // document.getElementById("reader").value = content;
-            this.filename = filename;
-            this.selectedFile = content;
+        updateText: function(file, filename){
+            this.text = file;
+            this.title = filename;
+            
+        },
+        updateSource: function(language){
+            this.sourceLanguage = language;
+        },
+        updateTarget: function(language){
+            this.targetLanguage = language;
         },
         updateTranslationDetails: function(translationDetails){
             this.translationDetails = translationDetails;
         },
-        editFile: function(){
-            this.editedFile = this.selectedFile;
-            this.displayEditModal = true;
-        },
-        saveEdit: function(){
-            this.selectedFile = this.editedFile;
-            this.displayEditModal = false;
-        },
-        cancelEdit: function(){
-            this.displayEditModal = false;
-        }
     }
     
 }

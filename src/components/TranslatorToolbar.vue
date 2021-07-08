@@ -7,10 +7,10 @@
                     <Button id="file-select" label="Select File" class="p-button-outlined" v-on:click="selectFile()"/>
                 </div>
                 <div class="p-mx-1">
-                    <Dropdown v-model="sourceLanguage" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Source"/>
+                    <Dropdown v-model="sourceLanguage" v-on:change="$emit('sourceUpdated', sourceLanguage)" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Source"/>
                 </div>
                 <div class="p-mx-1">
-                    <Dropdown v-model="targetLanguage" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Target"/>
+                    <Dropdown v-model="targetLanguage" v-on:change="$emit('targetUpdated', targetLanguage)" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Target"/>
                 </div>
                 
                 
@@ -45,7 +45,7 @@
 <script>
 
 export default {
-    name: "TranslatorToolbar",
+    name: 'TranslatorToolbar',
     components: {
 
     },
@@ -54,11 +54,11 @@ export default {
     },
     data: function(){
         return {
-            file: "",
-            filename: "",
-            edit: "",
-            sourceDisplay: "Select Source",
-            targetDisplay: "Select Target",
+            file: '',
+            filename: '',
+            edit: '',
+            sourceLanguage : '',
+            targetLanguage: '',
             languages: [
                 { name: 'Arabic', code: 'ar' },
                 { name: 'Chinese', code: 'zh' },
@@ -133,26 +133,13 @@ export default {
             // this.$emit('highlighFile');
         },
         clearFile: function(){
-            this.file = "";
-            this.filename = "";
+            this.file = '';
+            this.filename = '';
             this.$emit('fileUpdated', this.file, this.filename);
-            this.edit = "";
+            this.edit = '';
         },
-        languageSelected: function(language, languageType){
-            if (languageType == 'source'){
-                this.sourceDisplay = language.name;
-                this.$emit('languageUpdated', language, 'source');
-            }else{
-                this.targetDisplay = language.name;
-                this.$emit('languageUpdated', language, 'target');
-            }
-            
-        }
     },
-    watch: {
-
-    },
-    emit: ['fileUpdated', 'languageUpdated']
+    emit: ['fileUpdated', 'sourceUpdated', 'targetUpdated']
 }
 
 </script>

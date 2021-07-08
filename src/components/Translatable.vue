@@ -15,15 +15,23 @@ export default {
     name: "Translatable",
     props: {
         source: {
-            type: Object
+            type: String
         },
         target: {
-            type: Object
+            type: String
         },
         original: {
             type: String,
             required: true
         }  
+    },
+    data: function(){
+        return {
+            sourceData: this.source,
+            targetData: this.target,
+            originalData: this.original,
+            displayErrorModal: false
+        }
     },
     methods: {
         /*
@@ -37,7 +45,7 @@ export default {
             
         */
         translate: function(){
-            if (this.sourceData != null && this.targetData != null){
+            if (this.sourceData != '' && this.targetData != ''){
 
                 var translation = translationService.translate(this.sourceData, this.targetData, this.originalData);
             
@@ -53,14 +61,6 @@ export default {
                 this.displayErrorModal = true;
                 return;
             }  
-        }
-    },
-    data: function(){
-        return {
-            sourceData: this.source,
-            targetData: this.target,
-            originalData: this.original,
-            displayErrorModal: false
         }
     },
     watch: {
