@@ -2,7 +2,7 @@
 
 
     <div class="p-grid">
-        <div class="p-col-8 p-offset-2 p-mt-5">
+        <div class="p-col-10 p-offset-1 p-mt-3">
             <Reader language="english"/>
         </div>
     </div>  

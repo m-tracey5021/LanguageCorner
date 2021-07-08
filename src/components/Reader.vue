@@ -1,23 +1,9 @@
 <template>
 
-
-    <div class="p-grid pt-2">
-        <div class="p-col-8 p-offset-4">
-            <div class="p-d-flex p-jc-between">
-                <FileSelector instruction="Please select a file" @fileSelected="updateTextReader"/>
-                <Dropdown v-model="sourceLanguage" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Source"/>
-                <Dropdown v-model="targetLanguage" :options="languages" optionLabel="name" optionValue="code" placeholder="Select Target"/>
-                <span class="p-buttonset">
-                    <Button label="Edit" icon="far fa-edit" v-on:click="editFile()"/>
-                    <Button label="Translate" icon="fas fa-exchange-alt"/>
-                    <Button label="Clear" icon="fas fa-undo" v-on:click="clearFile()"/>   
-                </span>
-            </div>
-            
-        </div>
-        
-    </div>
     <div class="p-grid">
+        <div class="p-col-8 p-offset-4">
+            <TranslatorToolbar @fileUpdated="updateTextReader" @languageUpdated=""/>
+        </div>
         <div class="p-col-4">
             <TranslationDetails :translationDetails="translationDetails"/>
         </div>
@@ -25,34 +11,20 @@
             <Translator :source="sourceLanguage" :target="targetLanguage" :text="selectedFile" :title="filename" @translationsUpdated="updateTranslationDetails"/>
         </div>
     </div>
-    <Dialog v-model:visible="displayEditModal" :modal="true">
-        <template #header>
-            <div class="p-d-flex p-jc-start p-mt-3">
-                <h3>Edit File</h3>
-            </div>
-            
-        </template>
-        <Textarea v-model="editedFile" rows="10" cols="30" />
-        <template #footer>
-            <Button label="Save" icon="far fa-save" class="p-button-outlined" v-on:click="saveEdit()"/>
-            <Button label="Cancel" icon="far fa-window-close" class="p-button-outlined" v-on:click="cancelEdit()"/>
-        </template>
-    </Dialog>
     
 </template>
 
 <script>
 
-
-import FileSelector from "./FileSelector";
-import TranslationDetails from "./TranslationDetails";
-import Translator from "./Translator";
+import TranslatorToolbar from './TranslatorToolbar';
+import TranslationDetails from './TranslationDetails';
+import Translator from './Translator';
 
 export default {
     name: "Reader",
     components: {
         
-        FileSelector,
+        TranslatorToolbar,
         TranslationDetails,
         Translator
     },
