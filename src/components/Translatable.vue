@@ -45,6 +45,7 @@ export default {
             
         */
         translate: function(){
+            debugger;
             if (this.sourceData != '' && this.targetData != ''){
 
                 var translation = translationService.translate(this.sourceData, this.targetData, this.originalData);
@@ -64,7 +65,12 @@ export default {
         }
     },
     watch: {
-        
+        source: function(newValue){
+            this.sourceData = newValue;
+        },
+        target: function(newValue){
+            this.targetData = newValue;
+        }
     }
     // inject: ["translationService"]
 

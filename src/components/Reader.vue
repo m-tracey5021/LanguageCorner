@@ -49,9 +49,11 @@ export default {
             
         },
         updateSource: function(language){
+            console.log(language);
             this.sourceLanguage = language;
         },
         updateTarget: function(language){
+            console.log(language);
             this.targetLanguage = language;
         },
         updateTranslationDetails: function(translationDetails){

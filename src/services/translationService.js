@@ -1,21 +1,70 @@
+
+// format of json result:
+
+// {
+//     results: [
+//         {
+//             id: ''
+//             source: ''
+//             language: ''
+//             headword: {
+//                 text: ''
+//                 pronounciation: ''
+//                 pos: ''
+//                 homograph: ''
+//                 inflections: [
+//                     {
+//                         text: ''
+//                         tense: ''
+//                     }
+//                 ]
+//             }
+//             senses: [
+//                 {
+//                     id: ''
+//                     see: ''
+//                     definition: ''
+//                     subcategory: ''
+//                     translations: {
+//                         language: {
+//                             text: ''
+//                         }
+//                     }
+//                     examples: [
+//                         {
+//                             text: ''
+//                             translations: ''
+//                         }
+//                     ]
+//                     compositional_phrases: [
+//                         {
+//                             text: ''
+//                             definition: ''
+//                             translations: ''
+//                             examples: []
+//                         }
+//                     ]
+//                 }
+//             ]
+//             related_entries: []
+//         }
+//     ]
+// }
+
 export function translate(sourceLanguage, targetLanguage, original){
     debugger;
     console.log("Translating...");
             
     var base64 = require('base-64');
 
-    var apiEndpoint = 'https://dictapi.lexicala.com/search-entries?source=global&language=' + sourceLanguage + '&text=';
+    var url = 'https://dictapi.lexicala.com/search-entries?source=global&language=' + sourceLanguage + '&text=' + original + '&morph=true&analyzed=true';
     var username = 'm.tracey5021@gmail.com';
     var password = 'y_W0rd53cUr!t';
 
     var headers = new Headers();
 
-    headers.append('Authorization', 'Basic ' + base64.encode(username + ":" + password));
+    headers.append('Authorization', 'Basic ' + base64.encode(username + ":" + password));    
 
-    // this.originalWordData = newValue.split(" ");
-
-    var url = apiEndpoint + original;
-    debugger;
     fetch(url, {method:'GET',
         headers: headers,
     })
@@ -23,20 +72,24 @@ export function translate(sourceLanguage, targetLanguage, original){
         return response.json();
     })
     .then(function (obj){
-        console.log(obj);
-        var translations = obj.results[0].senses[0].translations;
-        console.log(translations);
-        var englishTranslations = translations.en;
-        console.log(englishTranslations);
-        var english;
-        if (Array.isArray(englishTranslations)){
-            english = englishTranslations[0].text;
-        }else{
-            english = englishTranslations.text;
+        debugger;
+        var translations = [];
+        for (var i = 0; i < obj.results.length; i ++){
+            var currentResult = obj.results[i];
+            for (var j = 0; j < currentResult.senses.length; j ++){
+                var currentSense = currentResult.senses[j];
+                var translation = currentSense.translations[targetLanguage].text;
+                translations.push(translation);
+                console.log(translation);
+            }
         }
-        return english;
+        return translations;
     })
     .catch(function (error){
         console.log('Unexpected error: ' + error);
     });
 }
+
+// var languageMap = {
+//     '': ''
+// };

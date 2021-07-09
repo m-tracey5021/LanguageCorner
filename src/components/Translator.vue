@@ -154,9 +154,15 @@ export default {
     },
     
     watch: {
+        source: function(newValue){
+            this.sourceData = newValue;
+        },
+        target: function(newValue){
+            this.targetData = newValue;
+        },
         text: function(newValue){
             this.loaded = false;
-            this.originalData = newValue.split(' ');
+            this.textData = newValue.split(' ');
             this.translationData = [];
             this.loaded = true;
             
