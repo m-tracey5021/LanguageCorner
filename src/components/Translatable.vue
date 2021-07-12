@@ -44,18 +44,12 @@ export default {
                     Portugese (French), Russian (French), Turkish (French)
             
         */
-        translate: function(){
-            debugger;
+        translate: async function(){
             if (this.sourceData != '' && this.targetData != ''){
-
-                var translation = translationService.translate(this.sourceData, this.targetData, this.originalData);
-            
-                var translationDetails = {
-                    "original": this.originalData,
-                    "translation": translation
-                };
-
-                this.$emit('translated', translationDetails, true);
+                
+                var translation = await translationService.translate(this.sourceData, this.targetData, this.originalData);
+                
+                this.$emit('translated', translation, true);
 
             }else{
                 // modal to say that languages not chosen

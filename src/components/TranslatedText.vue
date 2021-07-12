@@ -1,11 +1,17 @@
 <template>
     <div class="p-mx-1 grow pointer">
-        <div v-if="showTooltipData">
+        <!-- <div v-if="showTooltipData">
             <span class="mark" v-tooltip="translation">{{ translationDetailsData.original }}</span>
         </div>
         <div v-else>
             <span class="mark" v-on:click="translationSelected()">{{ translationDetailsData.original }}</span>
+        </div> -->
+        <div>
+            <span class="mark" v-on:click="toggle()">{{ translationDetailsData.original }}</span>
         </div>
+        <OverlayPanel ref="op">
+            <button>BUTTTTTONNN</button>
+        </OverlayPanel>
     </div>
     
 
@@ -37,6 +43,9 @@ export default {
         }
     },
     methods: {
+        toggle(event) {
+            this.$refs.op.toggle(event);
+        },
         translationSelected: function(){
             this.$emit('translationSelected', this.translationDetailsData, false);
         }

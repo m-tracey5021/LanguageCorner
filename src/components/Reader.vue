@@ -56,8 +56,8 @@ export default {
             console.log(language);
             this.targetLanguage = language;
         },
-        updateTranslationDetails: function(translationDetails){
-            this.translationDetails = translationDetails;
+        updateTranslationDetails: function(translation){
+            this.translationDetails = translation;
         },
     }
     

@@ -82,24 +82,9 @@ export default {
                     label: "Alignment",
                     items: 
                     [
-                        { label: "Left", icon: "fas fa-align-left", command: () => { 
-                            var textClass = document.getElementById("text-panel").classList;
-                            textClass.add("p-jc-start");
-                            textClass.remove("p-jc-center");
-                            textClass.remove("p-jc-end");
-                        }},
-                        { label: "Center", icon: "fas fa-align-center", command: () => { 
-                            var textClass = document.getElementById("text-panel").classList;
-                            textClass.remove("p-jc-start");
-                            textClass.add("p-jc-center");
-                            textClass.remove("p-jc-end");
-                        }},
-                        { label: "Right", icon: "fas fa-align-right", command: () => { 
-                            var textClass = document.getElementById("text-panel").classList;
-                            textClass.remove("p-jc-start");
-                            textClass.remove("p-jc-center");
-                            textClass.add("p-jc-end");    
-                        }},
+                        { label: "Left", icon: "fas fa-align-left", command: () => { this.setAlignment('left'); }},
+                        { label: "Center", icon: "fas fa-align-center", command: () => { this.setAlignment('center'); }},
+                        { label: "Right", icon: "fas fa-align-right", command: () => { this.setAlignment('right'); }},
 
                     ]
                 }
@@ -108,17 +93,6 @@ export default {
         }
     },
     methods: {
-        // isAlpha: function(str){
-        //     return str.length === 1 && str.match(/[a-z]/i);
-        // },
-        // trim: function(word){
-        //     for (var i = 0; i < word.length; i ++){
-        //         if (!this.isAlpha(word.charAt(i))){
-        //             word = word.substring(0, i) + word.substring(i + 1);
-        //         }
-        //     }
-        //     return word.toLowerCase();
-        // },
         toggle: function(event){
             this.$refs.menu.toggle(event);
         },
@@ -128,9 +102,26 @@ export default {
                 elements[i].style.fontSize = size;
             }
         },
+        setAlignment: function(alignment){
+            var textClass = document.getElementById("text-panel").classList;
+            if (alignment == 'left'){
+                textClass.add("p-jc-start");
+                textClass.remove("p-jc-center");
+                textClass.remove("p-jc-end");
+            }else if (alignment == 'center'){
+                textClass.remove("p-jc-start");
+                textClass.add("p-jc-center");
+                textClass.remove("p-jc-end");
+            }else if (alignment == 'right'){
+                textClass.remove("p-jc-start");
+                textClass.remove("p-jc-center");
+                textClass.add("p-jc-end");
+            }
+        },
         isTranslated: function(word){
             for (var i = 0; i < this.translationData.length; i ++){
-                if (this.translationData[i].original == word){
+                debugger;
+                if (this.translationData[i].text == word){
                     return true;
                 }
             }
@@ -138,18 +129,18 @@ export default {
         },
         getTranslated: function(word){
             for (var i = 0; i < this.translationData.length; i ++){
-                if (this.translationData[i].original == word){
+                if (this.translationData[i].text == word){
                     return this.translationData[i];
                 }
             }
             return {};
         },
-        updateTranslationData: function(translationDetails, newTranslation){
+        updateTranslationData: function(translation, newTranslation){
             if (newTranslation == true){
-                this.translationData.push(translationDetails);
+                this.translationData.push(translation);
                 this.translationCount ++;
             }
-            this.$emit('translationsUpdated', translationDetails);
+            this.$emit('translationsUpdated', translation);
         }
     },
     

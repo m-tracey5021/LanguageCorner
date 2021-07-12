@@ -2,14 +2,12 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-// import ElementPlus from "element-plus";
-// import "element-plus/lib/theme-chalk/index.css";
+
 import PrimeVue from "primevue/config";
 import Button from "primevue/button";
 import Panel from "primevue/panel";
 import ScrollPanel from 'primevue/scrollpanel';
 import Fieldset from 'primevue/fieldset';
-// import Divider from "primevue/divider";
 import Splitter from "primevue/splitter";
 import SplitterPanel from "primevue/splitterpanel";
 import Tooltip from "primevue/tooltip";
@@ -19,6 +17,7 @@ import Dropdown from "primevue/dropdown";
 import Dialog from 'primevue/dialog';
 import Textarea from 'primevue/textarea';
 import Toolbar from 'primevue/toolbar';
+import OverlayPanel from 'primevue/overlaypanel';
 
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
@@ -68,6 +67,7 @@ app.component("Dropdown", Dropdown);
 app.component("Dialog", Dialog);
 app.component("Textarea", Textarea);
 app.component("Toolbar", Toolbar);
+app.component("OverlayPanel", OverlayPanel);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 
