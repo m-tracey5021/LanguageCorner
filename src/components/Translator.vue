@@ -12,7 +12,7 @@
             <div v-if="loaded" id="text-panel" class="p-d-flex p-flex-wrap p-jc-center">
                 <span v-for="word in textData" :key="word">
                     <span v-if="isTranslated(word)">
-                        <TranslatedText :translationDetails="getTranslated(word)" :showTooltip="false" @translationSelected="updateTranslationData"/>
+                        <TranslatedText :translation="getTranslated(word)" :showTooltip="false" @translationSelected="updateTranslationData"/>
                     </span>
                     <span v-else>
                         <Translatable :source="sourceData" :target="targetData" :original="word" @translated="updateTranslationData"/>
@@ -121,7 +121,7 @@ export default {
         isTranslated: function(word){
             for (var i = 0; i < this.translationData.length; i ++){
                 debugger;
-                if (this.translationData[i].text == word){
+                if (this.translationData[i].search == word){
                     return true;
                 }
             }
@@ -129,7 +129,7 @@ export default {
         },
         getTranslated: function(word){
             for (var i = 0; i < this.translationData.length; i ++){
-                if (this.translationData[i].text == word){
+                if (this.translationData[i].search == word){
                     return this.translationData[i];
                 }
             }

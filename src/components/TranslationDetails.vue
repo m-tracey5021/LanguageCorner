@@ -3,7 +3,7 @@
     
     <Fieldset id="simple-translation" legend="Simple Translation" :toggleable="true" :collapsed="true" class="p-mb-5 p-shadow-4">
         <div>
-            <Switch :left="originalData" :right="translationData"/>
+            
         </div>
     </Fieldset>
     <Fieldset id="translation-details" legend="Translation Details" :toggleable="true" :collapsed="true" class="p-my-5 p-shadow-4">
@@ -29,7 +29,7 @@ export default {
         Switch
     },
     props: {
-        translationDetails: {
+        translation: {
             type: Object,
             required: true
         }
@@ -45,9 +45,7 @@ export default {
     },
     watch: {
         translationDetails: function(newValue){
-            this.translationDetailsData = newValue;
-            this.originalData = newValue.original;
-            this.translationData = newValue.translation;
+            this.translationData = newValue;
             this.buzzBoxes('simple-translation');
             this.buzzBoxes('translation-details');
             this.buzzBoxes('annotation');
@@ -56,9 +54,7 @@ export default {
     },
     data: function(){
         return {
-            originalData: "",
-            translationData: "",
-            translationDetailsData: this.translationDetails,
+            translationData: this.translation,
             detailsData: [
                 {
                     "Detail": "Pos",

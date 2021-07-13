@@ -7,7 +7,7 @@
             <span class="mark" v-on:click="translationSelected()">{{ translationDetailsData.original }}</span>
         </div> -->
         <div>
-            <span class="mark" v-on:click="toggle()">{{ translationDetailsData.original }}</span>
+            <span class="mark" v-on:click="toggle">{{ translationData.search }}</span>
         </div>
         <OverlayPanel ref="op">
             <button>BUTTTTTONNN</button>
@@ -33,7 +33,7 @@ export default {
         // ToolTip
     },
     props: {
-        translationDetails: {
+        translation: {
             type: Object,
             required: true
         },
@@ -47,12 +47,12 @@ export default {
             this.$refs.op.toggle(event);
         },
         translationSelected: function(){
-            this.$emit('translationSelected', this.translationDetailsData, false);
+            this.$emit('translationSelected', this.translationData, false);
         }
     },
     data: function(){
         return {
-            translationDetailsData: this.translationDetails,
+            translationData: this.translation,
             showTooltipData: this.showTooltip
         }
     }
